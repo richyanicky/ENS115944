@@ -1753,68 +1753,62 @@ summary {
 <p>Try executing this chunk by clicking the <em>Run</em> button within the chunk or by placing your cursor inside it and pressing <em>Ctrl+Shift+Enter</em>.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0MSA8LSByZWFkLmNzdihmaWxlPVwiRU5TRzExNTk0NC5jc3ZcIiApXG5zdHIoZGF0MSlcbmBgYCJ9 -->
-<pre class="r"><code>dat1 &lt;- read.csv(file=&quot;ENSG115944.csv&quot; )
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZGF0MSA8LSByZWFkLmNzdihmaWxlPVxcRU5TRzExNTk0NC5jc3ZcXCApXG5zdHIoZGF0MSlcbmBgYFxuYGBgIn0= -->
+<pre class="r"><code>```r
+dat1 &lt;- read.csv(file=\ENSG115944.csv\ )
 str(dat1)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiJ2RhdGEuZnJhbWUnOlx0MjU5IG9icy4gb2YgIDIgdmFyaWFibGVzOlxuICQgR2VuZSAgICA6IEZhY3RvciB3LyAyNTkgbGV2ZWxzIFwiR1RFWC0xMTFDVVwiLFwiR1RFWC0xMTFGQ1wiLC4uOiAxIDIgMyA0IDUgNiA3IDggOSAxMCAuLi5cbiAkIFJlc3BvbnNlOiBudW0gIDAuMzkwMiAwLjAzMTIgMC4xOTA0IC0wLjQzMDMgLTAuMzg5NSAuLi5cbiJ9 -->
-<pre><code>&#39;data.frame&#39;:   259 obs. of  2 variables:
- $ Gene    : Factor w/ 259 levels &quot;GTEX-111CU&quot;,&quot;GTEX-111FC&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
- $ Response: num  0.3902 0.0312 0.1904 -0.4303 -0.3895 ...</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0MiA8LSByZWFkLmNzdihmaWxlPVwiRU5TMTE1OTQ0U1RSdXAyLmNzdlwiLGhlYWRlcj1GQUxTRSApXG5kYXQzIDwtIG1lcmdlKGRhdDEsZGF0MlssYyhcIlYxXCIsXCJWNDJcIildLGJ5Lj1cIkdlbmVcIixieS55PVwiVjFcIilcbmRhdDQgPC0gZHJvcGxldmVscyhkYXQzKVxuZGF0NCRTVFIgPC0gYXMubnVtZXJpYyhhcy5jaGFyYWN0ZXIoZGF0NCRWNDIpKVxuZGF0NCRTVFJxdWFkIDwtIGRhdDQkU1RSKioyXG5zdW1tYXJ5KGxtKGRhdDQkUmVzcG9uc2UgfiBkYXQ0JFNUUiArIGRhdDQkU1RScXVhZCkpXG5gYGAifQ== -->
-<pre class="r"><code>dat2 &lt;- read.csv(file=&quot;ENS115944STRup2.csv&quot;,header=FALSE )
-dat3 &lt;- merge(dat1,dat2[,c(&quot;V1&quot;,&quot;V42&quot;)],by.=&quot;Gene&quot;,by.y=&quot;V1&quot;)
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-output-begin eyJkYXRhIjoiJ2RhdGEuZnJhbWUnOlx0MjU5IG9icy4gb2YgIDIgdmFyaWFibGVzOlxuICQgR2VuZSAgICA6IEZhY3RvciB3LyAyNTkgbGV2ZWxzIFxcR1RFWC0xMTFDVVxcLFxcR1RFWC0xMTFGQ1xcLC4uOiAxIDIgMyA0IDUgNiA3IDggOSAxMCAuLi5cbiAkIFJlc3BvbnNlOiBudW0gIDAuMzkwMiAwLjAzMTIgMC4xOTA0IC0wLjQzMDMgLTAuMzg5NSAuLi5cbiJ9 --&gt;
+</code></pre>
+<p>‘data.frame’: 259 obs. of 2 variables: $ Gene : Factor w/ 259 levels -111CU,-111FC,..: 1 2 3 4 5 6 7 8 9 10 … $ Response: num 0.3902 0.0312 0.1904 -0.4303 -0.3895 …</p>
+<pre><code>
+
+
+&lt;!-- rnb-output-end --&gt;
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZGF0MiA8LSByZWFkLmNzdihmaWxlPVxcRU5TMTE1OTQ0U1RSdXAyLmNzdlxcLGhlYWRlcj1GQUxTRSApXG5kYXQzIDwtIG1lcmdlKGRhdDEsZGF0MlssYyhcXFYxXFwsXFxWNDJcXCldLGJ5Lj1cXEdlbmVcXCxieS55PVxcVjFcXClcbmRhdDQgPC0gZHJvcGxldmVscyhkYXQzKVxuZGF0NCRTVFIgPC0gYXMubnVtZXJpYyhhcy5jaGFyYWN0ZXIoZGF0NCRWNDIpKVxuZGF0NCRTVFJxdWFkIDwtIGRhdDQkU1RSKioyXG5zdW1tYXJ5KGxtKGRhdDQkUmVzcG9uc2UgfiBkYXQ0JFNUUiArIGRhdDQkU1RScXVhZCkpXG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+dat2 &lt;- read.csv(file=\ENS115944STRup2.csv\,header=FALSE )
+dat3 &lt;- merge(dat1,dat2[,c(\V1\,\V42\)],by.=\Gene\,by.y=\V1\)
 dat4 &lt;- droplevels(dat3)
 dat4$STR &lt;- as.numeric(as.character(dat4$V42))
 dat4$STRquad &lt;- dat4$STR**2
 summary(lm(dat4$Response ~ dat4$STR + dat4$STRquad))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5DYWxsOlxubG0oZm9ybXVsYSA9IGRhdDQkUmVzcG9uc2UgfiBkYXQ0JFNUUiArIGRhdDQkU1RScXVhZClcblxuUmVzaWR1YWxzOlxuICAgICBNaW4gICAgICAgMVEgICBNZWRpYW4gICAgICAgM1EgICAgICBNYXggXG4tMS40MzM2NCAtMC4zMzg4NyAgMC4wMTE0MyAgMC4yOTEzNSAgMS4zNzAzMiBcblxuQ29lZmZpY2llbnRzOlxuICAgICAgICAgICAgICAgRXN0aW1hdGUgU3RkLiBFcnJvciB0IHZhbHVlIFByKD58dHwpICAgIFxuKEludGVyY2VwdCkgICAwLjIwNTgwNjEgIDAuMDMzODg1OCAgIDYuMDc0IDIuOTJlLTA5ICoqKlxuZGF0NCRTVFIgICAgIC0wLjAyMDQ4NDQgIDAuMDA1MTMyNSAgLTMuOTkxIDcuODNlLTA1ICoqKlxuZGF0NCRTVFJxdWFkIC0wLjAwNDA3NzkgIDAuMDAwNjAwMyAgLTYuNzkzIDQuMDBlLTExICoqKlxuLS0tXG5TaWduaWYuIGNvZGVzOiAgMCDigJgqKirigJkgMC4wMDEg4oCYKirigJkgMC4wMSDigJgq4oCZIDAuMDUg4oCYLuKAmSAwLjEg4oCYIOKAmSAxXG5cblJlc2lkdWFsIHN0YW5kYXJkIGVycm9yOiAwLjQ3NTQgb24gMzk5IGRlZ3JlZXMgb2YgZnJlZWRvbVxuICAoOTAgb2JzZXJ2YXRpb25zIGRlbGV0ZWQgZHVlIHRvIG1pc3NpbmduZXNzKVxuTXVsdGlwbGUgUi1zcXVhcmVkOiAgMC4xMDg1LFx0QWRqdXN0ZWQgUi1zcXVhcmVkOiAgMC4xMDQxIFxuRi1zdGF0aXN0aWM6IDI0LjI5IG9uIDIgYW5kIDM5OSBERiwgIHAtdmFsdWU6IDEuMTEzZS0xMFxuIn0= -->
 <pre><code>
-Call:
-lm(formula = dat4$Response ~ dat4$STR + dat4$STRquad)
+&lt;!-- rnb-source-end --&gt;
 
-Residuals:
-     Min       1Q   Median       3Q      Max 
--1.43364 -0.33887  0.01143  0.29135  1.37032 
-
-Coefficients:
-               Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   0.2058061  0.0338858   6.074 2.92e-09 ***
-dat4$STR     -0.0204844  0.0051325  -3.991 7.83e-05 ***
-dat4$STRquad -0.0040779  0.0006003  -6.793 4.00e-11 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 0.4754 on 399 degrees of freedom
-  (90 observations deleted due to missingness)
-Multiple R-squared:  0.1085,    Adjusted R-squared:  0.1041 
-F-statistic: 24.29 on 2 and 399 DF,  p-value: 1.113e-10</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShsbShkYXQ0JFJlc3BvbnNlIH4gZGF0NCRTVFIpKVxuYGBgIn0= -->
-<pre class="r"><code>summary(lm(dat4$Response ~ dat4$STR))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5DYWxsOlxubG0oZm9ybXVsYSA9IGRhdDQkUmVzcG9uc2UgfiBkYXQ0JFNUUilcblxuUmVzaWR1YWxzOlxuICAgICBNaW4gICAgICAgMVEgICBNZWRpYW4gICAgICAgM1EgICAgICBNYXggXG4tMS41MDc5OCAtMC4zMzM1NSAgMC4wMDQ2NCAgMC4zMTMzNSAgMS40NzQ2NyBcblxuQ29lZmZpY2llbnRzOlxuICAgICAgICAgICAgRXN0aW1hdGUgU3RkLiBFcnJvciB0IHZhbHVlIFByKD58dHwpICBcbihJbnRlcmNlcHQpIDAuMDQ4OTY1ICAgMC4wMjYxNjYgICAxLjg3MSAgICAwLjA2MiAuXG5kYXQ0JFNUUiAgICAwLjAwNTM2NCAgIDAuMDAzNjM0ICAgMS40NzYgICAgMC4xNDEgIFxuLS0tXG5TaWduaWYuIGNvZGVzOiAgMCDigJgqKirigJkgMC4wMDEg4oCYKirigJkgMC4wMSDigJgq4oCZIDAuMDUg4oCYLuKAmSAwLjEg4oCYIOKAmSAxXG5cblJlc2lkdWFsIHN0YW5kYXJkIGVycm9yOiAwLjUwMTYgb24gNDAwIGRlZ3JlZXMgb2YgZnJlZWRvbVxuICAoOTAgb2JzZXJ2YXRpb25zIGRlbGV0ZWQgZHVlIHRvIG1pc3NpbmduZXNzKVxuTXVsdGlwbGUgUi1zcXVhcmVkOiAgMC4wMDU0MTcsXHRBZGp1c3RlZCBSLXNxdWFyZWQ6ICAwLjAwMjkzIFxuRi1zdGF0aXN0aWM6IDIuMTc5IG9uIDEgYW5kIDQwMCBERiwgIHAtdmFsdWU6IDAuMTQwN1xuIn0= -->
+&lt;!-- rnb-output-begin eyJkYXRhIjoiXG5DYWxsOlxubG0oZm9ybXVsYSA9IGRhdDQkUmVzcG9uc2UgfiBkYXQ0JFNUUiArIGRhdDQkU1RScXVhZClcblxuUmVzaWR1YWxzOlxuICAgICBNaW4gICAgICAgMVEgICBNZWRpYW4gICAgICAgM1EgICAgICBNYXggXG4tMS40MzM2NCAtMC4zMzg4NyAgMC4wMTE0MyAgMC4yOTEzNSAgMS4zNzAzMiBcblxuQ29lZmZpY2llbnRzOlxuICAgICAgICAgICAgICAgRXN0aW1hdGUgU3RkLiBFcnJvciB0IHZhbHVlIFByKD58dHwpICAgIFxuKEludGVyY2VwdCkgICAwLjIwNTgwNjEgIDAuMDMzODg1OCAgIDYuMDc0IDIuOTJlLTA5ICoqKlxuZGF0NCRTVFIgICAgIC0wLjAyMDQ4NDQgIDAuMDA1MTMyNSAgLTMuOTkxIDcuODNlLTA1ICoqKlxuZGF0NCRTVFJxdWFkIC0wLjAwNDA3NzkgIDAuMDAwNjAwMyAgLTYuNzkzIDQuMDBlLTExICoqKlxuLS0tXG5TaWduaWYuIGNvZGVzOiAgMCDDouKCrMucKioqw6LigqzihKIgMC4wMDEgw6LigqzLnCoqw6LigqzihKIgMC4wMSDDouKCrMucKsOi4oKs4oSiIDAuMDUgw6LigqzLnC7DouKCrOKEoiAwLjEgw6LigqzLnCDDouKCrOKEoiAxXG5cblJlc2lkdWFsIHN0YW5kYXJkIGVycm9yOiAwLjQ3NTQgb24gMzk5IGRlZ3JlZXMgb2YgZnJlZWRvbVxuICAoOTAgb2JzZXJ2YXRpb25zIGRlbGV0ZWQgZHVlIHRvIG1pc3NpbmduZXNzKVxuTXVsdGlwbGUgUi1zcXVhcmVkOiAgMC4xMDg1LFx0QWRqdXN0ZWQgUi1zcXVhcmVkOiAgMC4xMDQxIFxuRi1zdGF0aXN0aWM6IDI0LjI5IG9uIDIgYW5kIDM5OSBERiwgIHAtdmFsdWU6IDEuMTEzZS0xMFxuIn0= --&gt;
+</code></pre>
+<p>Call: lm(formula = dat4<span class="math inline">\(Response ~ dat4\)</span>STR + dat4$STRquad)</p>
+<p>Residuals: Min 1Q Median 3Q Max -1.43364 -0.33887 0.01143 0.29135 1.37032</p>
+<p>Coefficients: Estimate Std. Error t value Pr(&gt;|t|)<br />
+(Intercept) 0.2058061 0.0338858 6.074 2.92e-09 <strong><em> dat4<span class="math inline">\(STR -0.0204844 0.0051325 -3.991 7.83e-05 *** dat4\)</span>STRquad -0.0040779 0.0006003 -6.793 4.00e-11 </em></strong> — Signif. codes: 0 â€˜<em><strong>â€™ 0.001 â€˜</strong>â€™ 0.01 â€˜</em>â€™ 0.05 â€˜.â€™ 0.1 â€˜ â€™ 1</p>
+<p>Residual standard error: 0.4754 on 399 degrees of freedom (90 observations deleted due to missingness) Multiple R-squared: 0.1085, Adjusted R-squared: 0.1041 F-statistic: 24.29 on 2 and 399 DF, p-value: 1.113e-10</p>
 <pre><code>
-Call:
-lm(formula = dat4$Response ~ dat4$STR)
 
-Residuals:
-     Min       1Q   Median       3Q      Max 
--1.50798 -0.33355  0.00464  0.31335  1.47467 
 
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)  
-(Intercept) 0.048965   0.026166   1.871    0.062 .
-dat4$STR    0.005364   0.003634   1.476    0.141  
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+&lt;!-- rnb-output-end --&gt;
 
-Residual standard error: 0.5016 on 400 degrees of freedom
-  (90 observations deleted due to missingness)
-Multiple R-squared:  0.005417,  Adjusted R-squared:  0.00293 
-F-statistic: 2.179 on 1 and 400 DF,  p-value: 0.1407</code></pre>
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuc3VtbWFyeShsbShkYXQ0JFJlc3BvbnNlIH4gZGF0NCRTVFIpKVxuYGBgXG5gYGAifQ== --&gt;
+
+```r
+```r
+summary(lm(dat4$Response ~ dat4$STR))</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-output-begin eyJkYXRhIjoiXG5DYWxsOlxubG0oZm9ybXVsYSA9IGRhdDQkUmVzcG9uc2UgfiBkYXQ0JFNUUilcblxuUmVzaWR1YWxzOlxuICAgICBNaW4gICAgICAgMVEgICBNZWRpYW4gICAgICAgM1EgICAgICBNYXggXG4tMS41MDc5OCAtMC4zMzM1NSAgMC4wMDQ2NCAgMC4zMTMzNSAgMS40NzQ2NyBcblxuQ29lZmZpY2llbnRzOlxuICAgICAgICAgICAgRXN0aW1hdGUgU3RkLiBFcnJvciB0IHZhbHVlIFByKD58dHwpICBcbihJbnRlcmNlcHQpIDAuMDQ4OTY1ICAgMC4wMjYxNjYgICAxLjg3MSAgICAwLjA2MiAuXG5kYXQ0JFNUUiAgICAwLjAwNTM2NCAgIDAuMDAzNjM0ICAgMS40NzYgICAgMC4xNDEgIFxuLS0tXG5TaWduaWYuIGNvZGVzOiAgMCDDouKCrMucKioqw6LigqzihKIgMC4wMDEgw6LigqzLnCoqw6LigqzihKIgMC4wMSDDouKCrMucKsOi4oKs4oSiIDAuMDUgw6LigqzLnC7DouKCrOKEoiAwLjEgw6LigqzLnCDDouKCrOKEoiAxXG5cblJlc2lkdWFsIHN0YW5kYXJkIGVycm9yOiAwLjUwMTYgb24gNDAwIGRlZ3JlZXMgb2YgZnJlZWRvbVxuICAoOTAgb2JzZXJ2YXRpb25zIGRlbGV0ZWQgZHVlIHRvIG1pc3NpbmduZXNzKVxuTXVsdGlwbGUgUi1zcXVhcmVkOiAgMC4wMDU0MTcsXHRBZGp1c3RlZCBSLXNxdWFyZWQ6ICAwLjAwMjkzIFxuRi1zdGF0aXN0aWM6IDIuMTc5IG9uIDEgYW5kIDQwMCBERiwgIHAtdmFsdWU6IDAuMTQwN1xuIn0= --&gt;
+</code></pre>
+<p>Call: lm(formula = dat4<span class="math inline">\(Response ~ dat4\)</span>STR)</p>
+<p>Residuals: Min 1Q Median 3Q Max -1.50798 -0.33355 0.00464 0.31335 1.47467</p>
+<p>Coefficients: Estimate Std. Error t value Pr(&gt;|t|)<br />
+(Intercept) 0.048965 0.026166 1.871 0.062 . dat4$STR 0.005364 0.003634 1.476 0.141<br />
+— Signif. codes: 0 â€˜<em><strong>â€™ 0.001 â€˜</strong>â€™ 0.01 â€˜</em>â€™ 0.05 â€˜.â€™ 0.1 â€˜ â€™ 1</p>
+<p>Residual standard error: 0.5016 on 400 degrees of freedom (90 observations deleted due to missingness) Multiple R-squared: 0.005417, Adjusted R-squared: 0.00293 F-statistic: 2.179 on 1 and 400 DF, p-value: 0.1407 ```</p>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1823,7 +1817,7 @@ F-statistic: 2.179 on 1 and 400 DF,  p-value: 0.1407</code></pre>
 <p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpUaGlzIGlzIGFuIFtSIE1hcmtkb3duXShodHRwOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tKSBOb3RlYm9vay4gV2hlbiB5b3UgZXhlY3V0ZSBjb2RlIHdpdGhpbiB0aGUgbm90ZWJvb2ssIHRoZSByZXN1bHRzIGFwcGVhciBiZW5lYXRoIHRoZSBjb2RlLiANCg0KVHJ5IGV4ZWN1dGluZyB0aGlzIGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqUnVuKiBidXR0b24gd2l0aGluIHRoZSBjaHVuayBvciBieSBwbGFjaW5nIHlvdXIgY3Vyc29yIGluc2lkZSBpdCBhbmQgcHJlc3NpbmcgKkN0cmwrU2hpZnQrRW50ZXIqLiANCg0KYGBge3J9DQpkYXQxIDwtIHJlYWQuY3N2KGZpbGU9IkVOU0cxMTU5NDQuY3N2IiApDQpzdHIoZGF0MSkNCmRhdDIgPC0gcmVhZC5jc3YoZmlsZT0iRU5TMTE1OTQ0U1RSdXAyLmNzdiIsaGVhZGVyPUZBTFNFICkNCmRhdDMgPC0gbWVyZ2UoZGF0MSxkYXQyWyxjKCJWMSIsIlY0MiIpXSxieS49IkdlbmUiLGJ5Lnk9IlYxIikNCmRhdDQgPC0gZHJvcGxldmVscyhkYXQzKQ0KZGF0NCRTVFIgPC0gYXMubnVtZXJpYyhhcy5jaGFyYWN0ZXIoZGF0NCRWNDIpKQ0KZGF0NCRTVFJxdWFkIDwtIGRhdDQkU1RSKioyDQpzdW1tYXJ5KGxtKGRhdDQkUmVzcG9uc2UgfiBkYXQ0JFNUUiArIGRhdDQkU1RScXVhZCkpDQpzdW1tYXJ5KGxtKGRhdDQkUmVzcG9uc2UgfiBkYXQ0JFNUUikpDQoNCmBgYA0KDQpBZGQgYSBuZXcgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpJbnNlcnQgQ2h1bmsqIGJ1dHRvbiBvbiB0aGUgdG9vbGJhciBvciBieSBwcmVzc2luZyAqQ3RybCtBbHQrSSouDQoNCldoZW4geW91IHNhdmUgdGhlIG5vdGVib29rLCBhbiBIVE1MIGZpbGUgY29udGFpbmluZyB0aGUgY29kZSBhbmQgb3V0cHV0IHdpbGwgYmUgc2F2ZWQgYWxvbmdzaWRlIGl0IChjbGljayB0aGUgKlByZXZpZXcqIGJ1dHRvbiBvciBwcmVzcyAqQ3RybCtTaGlmdCtLKiB0byBwcmV2aWV3IHRoZSBIVE1MIGZpbGUpLg0KDQpUaGUgcHJldmlldyBzaG93cyB5b3UgYSByZW5kZXJlZCBIVE1MIGNvcHkgb2YgdGhlIGNvbnRlbnRzIG9mIHRoZSBlZGl0b3IuIENvbnNlcXVlbnRseSwgdW5saWtlICpLbml0KiwgKlByZXZpZXcqIGRvZXMgbm90IHJ1biBhbnkgUiBjb2RlIGNodW5rcy4gSW5zdGVhZCwgdGhlIG91dHB1dCBvZiB0aGUgY2h1bmsgd2hlbiBpdCB3YXMgbGFzdCBydW4gaW4gdGhlIGVkaXRvciBpcyBkaXNwbGF5ZWQuDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpUaGlzIGlzIGFuIFtSIE1hcmtkb3duXShodHRwOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tKSBOb3RlYm9vay4gV2hlbiB5b3UgZXhlY3V0ZSBjb2RlIHdpdGhpbiB0aGUgbm90ZWJvb2ssIHRoZSByZXN1bHRzIGFwcGVhciBiZW5lYXRoIHRoZSBjb2RlLiANCg0KVHJ5IGV4ZWN1dGluZyB0aGlzIGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqUnVuKiBidXR0b24gd2l0aGluIHRoZSBjaHVuayBvciBieSBwbGFjaW5nIHlvdXIgY3Vyc29yIGluc2lkZSBpdCBhbmQgcHJlc3NpbmcgKkN0cmwrU2hpZnQrRW50ZXIqLiANCg0KYGBge3J9DQpsaWJyYXJ5KHRpZHlyKQ0KZGF0MSA8LSByZWFkLmNzdihmaWxlPSJFTlNHMTE1OTQ0LmNzdiIgKQ0Kc3RyKGRhdDEpDQpkYXQyIDwtIHJlYWQuY3N2KGZpbGU9IkVOUzExNTk0NFNUUnVwMi5jc3YiLGhlYWRlcj1GQUxTRSApDQpkYXQzIDwtIG1lcmdlKGRhdDEsZGF0MlssYygiVjEiLCJWNDIiKV0sYnkuPSJHZW5lIixieS55PSJWMSIpDQpkYXQ0IDwtIGRyb3BsZXZlbHMoZGF0MykNCiMjIyBWNDIgaXMgdGhlIHN0YXJ0IHBvc3Rpb24gd2Ugd2FudC4gc3RhcnQgPSA0MjYyNTM2NQ0KZGF0NCRTVFIgPC0gYXMubnVtZXJpYyhhcy5jaGFyYWN0ZXIoZGF0NCRWNDIpKQ0KZGF0NCRTVFJxdWFkIDwtIGRhdDQkU1RSKioyDQpzdW1tYXJ5KGxtKGRhdDQkUmVzcG9uc2UgfiBkYXQ0JFNUUiArIGRhdDQkU1RScXVhZCkpDQpzdW1tYXJ5KGxtKGRhdDQkUmVzcG9uc2UgfiBkYXQ0JFNUUikpDQoNCmRhdDUgPC0gYWdncmVnYXRlKGRhdDRbLGMoIlNUUiIsIlNUUnF1YWQiKV0sYnk9bGlzdChkYXQ0JEdlbmUsZGF0NCRSZXNwb25zZSksRlVOPW1lYW4sbmEucm09VFJVRSkNCg0Kc3VtbWFyeShsbShkYXQ1JEdyb3VwLjJ+IGRhdDUkU1RSK2RhdDUkU1RScXVhZCkpDQoNCnN1bW1hcnkobG0oZGF0NSRHcm91cC4yfiBkYXQ1JFNUUikpDQpgYGANCg0KQWRkIGEgbmV3IGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqSW5zZXJ0IENodW5rKiBidXR0b24gb24gdGhlIHRvb2xiYXIgb3IgYnkgcHJlc3NpbmcgKkN0cmwrQWx0K0kqLg0KDQpXaGVuIHlvdSBzYXZlIHRoZSBub3RlYm9vaywgYW4gSFRNTCBmaWxlIGNvbnRhaW5pbmcgdGhlIGNvZGUgYW5kIG91dHB1dCB3aWxsIGJlIHNhdmVkIGFsb25nc2lkZSBpdCAoY2xpY2sgdGhlICpQcmV2aWV3KiBidXR0b24gb3IgcHJlc3MgKkN0cmwrU2hpZnQrSyogdG8gcHJldmlldyB0aGUgSFRNTCBmaWxlKS4NCg0KVGhlIHByZXZpZXcgc2hvd3MgeW91IGEgcmVuZGVyZWQgSFRNTCBjb3B5IG9mIHRoZSBjb250ZW50cyBvZiB0aGUgZWRpdG9yLiBDb25zZXF1ZW50bHksIHVubGlrZSAqS25pdCosICpQcmV2aWV3KiBkb2VzIG5vdCBydW4gYW55IFIgY29kZSBjaHVua3MuIEluc3RlYWQsIHRoZSBvdXRwdXQgb2YgdGhlIGNodW5rIHdoZW4gaXQgd2FzIGxhc3QgcnVuIGluIHRoZSBlZGl0b3IgaXMgZGlzcGxheWVkLg0K</div>
 
 
 

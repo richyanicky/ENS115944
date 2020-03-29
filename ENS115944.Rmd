@@ -8,16 +8,23 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 
 ```{r}
+library(tidyr)
 dat1 <- read.csv(file="ENSG115944.csv" )
 str(dat1)
 dat2 <- read.csv(file="ENS115944STRup2.csv",header=FALSE )
 dat3 <- merge(dat1,dat2[,c("V1","V42")],by.="Gene",by.y="V1")
 dat4 <- droplevels(dat3)
+### V42 is the start postion we want. start = 42625365
 dat4$STR <- as.numeric(as.character(dat4$V42))
 dat4$STRquad <- dat4$STR**2
 summary(lm(dat4$Response ~ dat4$STR + dat4$STRquad))
 summary(lm(dat4$Response ~ dat4$STR))
 
+dat5 <- aggregate(dat4[,c("STR","STRquad")],by=list(dat4$Gene,dat4$Response),FUN=mean,na.rm=TRUE)
+
+summary(lm(dat5$Group.2~ dat5$STR+dat5$STRquad))
+
+summary(lm(dat5$Group.2~ dat5$STR))
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
