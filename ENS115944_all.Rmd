@@ -55,6 +55,13 @@ fitvals <- currmod[,2] + currmod[,3]*xvals + currmod[,4]*xvals**2
 plot(mf[,"dat5$Group.2"],predict(agglm),col=as.factor(mf[,"dat5$STR"]))
 lines(mf[,"dat5$Group.2"],fitvals)
 dev.off()
+
+pdf(file=paste0("dianostics",as.character(locs[,i]),".pdf"))
+
+plot(agglm)
+
+dev.off()
+
 }
 
 
@@ -68,6 +75,12 @@ xvals <- seq(min(mf$`dat5$STR`),max(mf$`dat5$STR`),length.out=246)
 fitvals <- currmod[,6] + currmod[,7]*xvals
 plot(mf[,"dat5$Group.2"],predict(agglmlin),col=as.factor(mf[,"dat5$STR"]))
 lines(mf[,"dat5$Group.2"],fitvals)
+dev.off()
+
+pdf(file=paste0("dianosticslin",as.character(locs[,i]),".pdf"))
+
+plot(agglmlin)
+
 dev.off()
 }
 
