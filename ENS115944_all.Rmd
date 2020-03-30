@@ -1,0 +1,72 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(tidyr)
+dat1 <- read.csv(file="ENSG115944.csv" )
+
+dat2locs <- read.csv(file="ENS115944STRup2.csv",header=FALSE )
+dat2 <- read.csv(file="ENS115944STRdatonly.csv",header=FALSE )
+locs <- dat2locs[2,2:ncol(dat2locs)]
+
+
+modelcoefs <- NULL
+
+for (i in 1:(ncol(locs)-1)) {
+dat3 <- merge(dat1,dat2[,c(1,i+1)],by.="Gene",by.y="V1")
+
+dat4 <- droplevels(dat3)
+### V42 is the start postion we want. start = 42625365
+dat4$STR <- dat4[,3]
+dat4$STRquad <- dat4$STR**2
+#seplm <- lm(dat4$Response ~ dat4$STR + dat4$STRquad)
+#summary(seplm)
+#summary(lm(dat4$Response ~ dat4$STR))
+
+dat5 <- aggregate(dat4[,c("STR","STRquad")],by=list(dat4$Gene,dat4$Response),FUN=sum,na.rm=TRUE)
+
+agglm <- lm(dat5$Group.2~ dat5$STR+dat5$STRquad)
+
+
+agglmlin <- lm(dat5$Group.2~ dat5$STR)
+
+currmod <- cbind(locs[i],agglm$coefficients[1],
+                         agglm$coefficients[2],
+                         agglm$coefficients[3],
+                         BIC(agglm),
+                         agglmlin$coefficients[1],
+                         agglmlin$coefficients[2],
+                         BIC(agglmlin))
+
+if (!is.na(currmod[,4])) {
+  pdf(file=paste0("mod",as.character(locs[i]),".pdf"))
+mf <- model.frame(agglm)
+#plot(mf[,"dat5$Group.2"],predict(agglm))
+xvals <- seq(min(mf$`dat5$STR`),max(mf$`dat5$STR`),length.out=246)
+
+fitvals <- currmod[,2] + currmod[,3]*xvals + currmod[,4]*xvals**2
+plot(mf[,"dat5$Group.2"],predict(agglm),col=as.factor(mf[,"dat5$STR"]))
+lines(mf[,"dat5$Group.2"],fitvals)
+dev.off()
+}
+
+
+names(currmod) <- c("location","Intercept","BetaSTR","BetaSTRquad","BICfull","Interceptlin","BetaSTRlin","BIClin")
+
+modelcoefs <- rbind(modelcoefs,currmod)
+                                  
+}
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

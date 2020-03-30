@@ -26,13 +26,16 @@ dat5 <- aggregate(dat4[,c("STR","STRquad")],by=list(dat4$Gene,dat4$Response),FUN
 agglm <- lm(dat5$Group.2~ dat5$STR+dat5$STRquad)
 summary(agglm)
 
+#agglmcat <- lm(dat5$Group.2~ as.factor(dat5$STR)+as.factor(dat5$STRquad))
+#summary(agglmcat)
+
 summary(lm(dat5$Group.2~ dat5$STR))
 
 mf <- model.frame(agglm)
 plot(mf[,"dat5$Group.2"],predict(agglm))
 xvals <- seq(-24,14,length.out=246)
 fitvals <- 0.158 -0.0144*xvals - 0.00234*xvals**2
-plot(mf[,"dat5$Group.2"],predict(agglm),col=as.factor(mf[,"dat5$STRquad"]))
+plot(mf[,"dat5$Group.2"],predict(agglm),col=as.factor(mf[,"dat5$STR"]))
 lines(mf[,"dat5$Group.2"],fitvals)
 ```
 
