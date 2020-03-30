@@ -45,13 +45,28 @@ currmod <- cbind(locs[i],agglm$coefficients[1],
                          BIC(agglmlin))
 
 if (!is.na(currmod[,4])) {
-  pdf(file=paste0("mod",as.character(locs[i]),".pdf"))
+
+  pdf(file=paste0("mod",as.character(locs[,i]),".pdf"))
 mf <- model.frame(agglm)
 #plot(mf[,"dat5$Group.2"],predict(agglm))
 xvals <- seq(min(mf$`dat5$STR`),max(mf$`dat5$STR`),length.out=246)
 
 fitvals <- currmod[,2] + currmod[,3]*xvals + currmod[,4]*xvals**2
 plot(mf[,"dat5$Group.2"],predict(agglm),col=as.factor(mf[,"dat5$STR"]))
+lines(mf[,"dat5$Group.2"],fitvals)
+dev.off()
+}
+
+
+if (is.na(currmod[,4]) & !is.na(currmod[,3])) {
+
+  pdf(file=paste0("modlin",as.character(locs[,i]),".pdf"))
+mf <- model.frame(agglmlin)
+#plot(mf[,"dat5$Group.2"],predict(agglm))
+xvals <- seq(min(mf$`dat5$STR`),max(mf$`dat5$STR`),length.out=246)
+
+fitvals <- currmod[,6] + currmod[,7]*xvals
+plot(mf[,"dat5$Group.2"],predict(agglmlin),col=as.factor(mf[,"dat5$STR"]))
 lines(mf[,"dat5$Group.2"],fitvals)
 dev.off()
 }
@@ -65,8 +80,4 @@ modelcoefs <- rbind(modelcoefs,currmod)
 
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
-
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
