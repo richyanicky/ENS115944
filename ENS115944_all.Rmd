@@ -36,12 +36,29 @@ agglm <- lm(dat5$Group.2~ dat5$STR+dat5$STRquad)
 
 agglmlin <- lm(dat5$Group.2~ dat5$STR)
 
+fpval <- 0.0
+tab1 <- summary(agglm)
+if (!is.null(tab1$fstatistic[3])) {
+fpval <- pf(tab1$fstatistic[1],df1=tab1$fstatistic[2],df2=tab1$fstatistic[3],lower.tail = FALSE)
+}
+
+
+tablin <- summary(agglmlin)
+
+fpvalin <- 0.0
+
+if (!is.null(tab1$fstatistic[3])) {
+fpvalin <- pf(tablin$fstatistic[1],df1=tablin$fstatistic[2],df2=tablin$fstatistic[3],lower.tail = FALSE)
+}
+
 currmod <- cbind(locs[i],agglm$coefficients[1],
                          agglm$coefficients[2],
                          agglm$coefficients[3],
+                         fpval,
                          BIC(agglm),
                          agglmlin$coefficients[1],
                          agglmlin$coefficients[2],
+                         fpvalin,
                          BIC(agglmlin))
 
 if (!is.na(currmod[,4])) {
@@ -52,7 +69,7 @@ mf <- model.frame(agglm)
 xvals <- seq(min(mf$`dat5$STR`),max(mf$`dat5$STR`),length.out=246)
 
 fitvals <- currmod[,2] + currmod[,3]*xvals + currmod[,4]*xvals**2
-plot(mf[,"dat5$Group.2"],predict(agglm),col=as.factor(mf[,"dat5$STR"]))
+plot(mf[,"dat5$Group.2"],predict(agglm),col=as.factor(mf[,"dat5$STR"]),xlab="Actual")
 lines(mf[,"dat5$Group.2"],fitvals)
 dev.off()
 
@@ -69,11 +86,10 @@ if (is.na(currmod[,4]) & !is.na(currmod[,3])) {
 
   pdf(file=paste0("modlin",as.character(locs[,i]),".pdf"))
 mf <- model.frame(agglmlin)
-#plot(mf[,"dat5$Group.2"],predict(agglm))
 xvals <- seq(min(mf$`dat5$STR`),max(mf$`dat5$STR`),length.out=246)
 
 fitvals <- currmod[,6] + currmod[,7]*xvals
-plot(mf[,"dat5$Group.2"],predict(agglmlin),col=as.factor(mf[,"dat5$STR"]))
+plot(mf[,"dat5$Group.2"],predict(agglmlin),col=as.factor(mf[,"dat5$STR"]),xlab="Actual")
 lines(mf[,"dat5$Group.2"],fitvals)
 dev.off()
 
@@ -85,11 +101,13 @@ dev.off()
 }
 
 
-names(currmod) <- c("location","Intercept","BetaSTR","BetaSTRquad","BICfull","Interceptlin","BetaSTRlin","BIClin")
+names(currmod) <- c("location","Intercept","BetaSTR","BetaSTRquad","F-Pval","BICfull","Interceptlin","BetaSTRlin","F-Pval-lin","BIClin")
 
 modelcoefs <- rbind(modelcoefs,currmod)
                                   
 }
+
+write.csv(modelcoefs,file="D:/ryanicky/workspace/nonlin/ENS115944/Model_results.csv",row.names=FALSE)
 
 ```
 
