@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 title: "Nonlinear models in R"
 output:
@@ -218,3 +219,225 @@ Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by press
 When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
 
 The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+=======
+---
+title: "Nonlinear models in R"
+output:
+  word_document:
+    toc: yes
+  html_notebook: default
+  pdf_document: default
+  html_document:
+    fig_caption: yes
+    toc: yes
+---
+
+
+```{r}
+### Load libraies for plots and data analysis
+library(tidyr)
+library(ggplot2)
+library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
+
+# load response variables
+
+### Read data for specific gene expression
+dat1 <- read.csv(file="ENSG115944.csv" )
+head(dat1)
+
+# STR data for locus of interest
+dat2 <- read.csv(file="ENS115944STRup2.csv",header=FALSE )
+dat2[1:5,1:5]
+
+# bring response and STR information together.
+dat3 <- merge(dat1,dat2[,c("V1","V42")],by.x="Gene",by.y="V1")
+dat3[1:5,]
+
+#We only want the one locus. Drop all other levels from factor variables.
+dat4 <- droplevels(dat3)
+
+### Copy the data for detailed analsis requiring madifcations
+dat3temp <- dat3
+dat3temp$STR <- as.numeric(as.character(dat3temp$V42))
+
+dat3temp[seq(1,nrow(dat3temp),2),"side"] <- "L"
+dat3temp[seq(2,nrow(dat3temp),2),"side"] <- "R"
+```
+
+*In the next section we will have the following analysis*
+
+The STR(s) are on two independent chanels. To utilize the values to determine significant effects the chanels need to be combined. The following need to be demntrated:
+
+* The chanel has no effect (i.e. left or right), this shows the values are assigned at random.
+* The value of the STR should be equal and opposite across the chanel, the values -4 and 4 cancel for example
+* The STR and STR^2 are significant along with the interaction of STR and STR^2
+
+```{r}
+
+## Model to determine if there is any significance by side , there should be none.
+sidelm <- lm(Response~side,data=dat3temp)
+summary(sidelm)
+
+## Model to determine if there is any significance by STR by itself , there should be none.
+STRlm <- lm(Response~STR,data=dat3temp)
+summary(STRlm)
+
+## Model to determine if there is any significance by STR by itself , there should be none.
+STRsidelm <- lm(Response~STR+side,data=dat3temp)
+summary(STRsidelm)
+tab_model(sidelm,STRlm,STRsidelm)
+
+
+p1 <- ggplot(dat3temp, aes(as.factor(STR),Response)) + facet_grid(~side) + geom_boxplot()
+
+
+p1
+
+```
+
+The STR(s) chanels are combined "summed" across.
+
+* The chanel has no effect (i.e. left or right), this shows the values are assigned at random.
+* The value of the STR should be equal and opposite across the chanel, the values -4 and 4 cancel for example
+* The STR and STR^2 are significant along with the interaction of STR and STR^2
+
+
+```{r}
+
+
+### V42 is the start postion we want. start = 42625365
+
+#### Want the STR value to numeric not factor
+dat4$STR <- as.numeric(as.character(dat4$V42))
+dat4$STRquad <- dat4$STR**2
+
+### Add L/R side can be aribtrary becuase of the model steps above.
+### i.e no signifcance when choosing side or STR just need to constent
+dat4[seq(1,nrow(dat4),2),"side"] <- "L"
+dat4[seq(2,nrow(dat4),2),"side"] <- "R"
+
+dat4[seq(1,nrow(dat4),2),"opside"] <- "R"
+dat4[seq(2,nrow(dat4),2),"opside"] <- "L"
+
+### Model with sqaured term.
+seplm4a <- lm(dat4$Response ~ dat4$STR + dat4$STRquad + dat4$side )
+
+## STR matter and the squre matters , side L/R does not.
+summary(seplm4a)
+BIC(seplm4a)
+
+seplm4b <- lm(dat4$Response ~ dat4$STR)
+summary(seplm4b)
+BIC(seplm4b)
+
+
+
+summary(lm(dat4$Response ~ dat4$STR + abs(dat4$STR)))
+
+#dat4$V42 <- factor(dat4$V42,levels(dat4$V42)[order(abs(dat4$STR))])
+p2a <- ggplot(dat4, aes(paste0(as.factor(STR),side),Response)) + geom_point() + facet_grid(~opside,scales="free_x")
+
+p2a
+
+summary(lm(Response~paste0(as.factor(STRquad),side),data = dat4))
+
+p2 <- ggplot(dat4, aes(as.factor(STRquad),Response)) + geom_boxplot() + facet_grid(~STR+side,scales="free_x")
+
+p2
+
+```
+
+```{r}
+
+dat5 <- aggregate(dat4[,c("STR","STRquad")],by=list(dat4$Gene,dat4$Response),FUN=sum,na.rm=TRUE)
+
+names(dat5) <- c("Gene","y","STR","STRsqr")
+
+
+agglm <- lm(y ~ STR+STR*STRsqr,dat=dat5)
+summary(agglm)
+
+SSTotal <- var( dat5$y ) * (nrow(dat5)-1)
+    SSE     <- sum( agglm$resid^2 )
+SSreg   <- SSTotal - SSE
+
+SSTotal
+SSreg
+SSE
+
+
+BIC(agglm)
+
+sum(resid(agglm)^2)
+
+mf <- model.frame(agglm)
+plot(mf[,"y"],predict(agglm))
+xvals <- seq(-24,14,length.out=246)
+fitvals <- 0.1458 -0.02701*xvals - 0.001724*xvals**2 + 0.00008863*(xvals*xvals**2)
+
+
+plot(mf[,"y"],predict(agglm),col=as.factor(mf[,"STR"]),main="Actual v predicted with model fit estimate")
+lines(mf[,"y"],fitvals)
+
+plot(mf[,"y"],fitvals,main="Actual v model fit estimate")
+
+#Coefficients:
+#              Estimate Std. Error t value Pr(>|t|)    
+#(Intercept)  1.458e-01  4.533e-02   3.216 0.001475 ** 
+#STR         -2.701e-02  7.974e-03  -3.387 0.000826 ***
+#STRsqr      -1.724e-03  5.999e-04  -2.874 0.004416 ** 
+#STR:STRsqr   8.863e-05  4.182e-05   2.119 0.035090 * 
+
+
+p3 <- ggplot(dat5, aes(as.factor(STRsqr),y)) + geom_boxplot() + facet_grid(~STR,scales="free_x")
+
+p3
+
+
+#agglmcat <- lm(dat5$Group.2~ as.factor(dat5$STR)+as.factor(dat5$STRquad))
+#summary(agglmcat)
+
+summary(lm(dat5$y ~ dat5$STR))
+
+dat5$linsum <- dat5$STR + dat5$STRsqr
+dat5$linsumint <- dat5$STR + dat5$STRsqr + (dat5$STR*dat5$STRsqr)
+
+linmodsqr <- lm(dat5$y ~ dat5$linsum)
+
+BIC(linmodsqr)
+
+#(Intercept)  0.1240251  0.0434871   2.852 0.004717 ** 
+#dat5$linsum -0.0014102  0.0003685  -3.827 0.000165 ***
+
+xvals <- seq(0,300,1)
+
+plot(dat5$linsum,dat5$y)
+lines(xvals,0.124-0.00141*xvals)
+
+linmodsqrint <- lm(dat5$y ~ dat5$linsumint)
+
+BIC(linmodsqrint)
+
+summary(linmodsqrint)
+
+xvals <- seq(-6650,1600,5)
+
+plot(dat5$linsumint,dat5$y)
+lines(x=0.0000427*xvals)
+
+mf <- model.frame(agglm)
+plot(mf[,"y"],predict(agglm))
+xvals <- seq(-24,14,length.out=246)
+fitvals <- 0.158 -0.0144*xvals - 0.00234*xvals**2
+plot(xvals,predict(agglm),col=as.factor(mf[,"STR"]))
+lines(xvals,fitvals)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+>>>>>>> 8dda97a1fe00a197412e75970532a7e2b4de4bc1
