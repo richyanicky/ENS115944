@@ -1,0 +1,90 @@
+---
+title: "Nonlinear models in R"
+output:
+  pdf_document: default
+  html_notebook: default
+  html_document: 
+    fig_caption: yes
+    toc: yes
+---
+
+
+```{r}
+### Load libraies for plots and data analysis
+library(tidyr)
+library(ggplot2)
+library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
+
+
+lmp <- function (modelobject) {
+    if (class(modelobject) != "lm") stop("Not an object of class 'lm' ")
+    f <- summary(modelobject)$fstatistic
+    p <- 0.0
+    if (!is.null(f)) {
+    p <- pf(f[1],f[2],f[3],lower.tail=F)
+    }
+    attributes(p) <- NULL
+    return(p)
+}
+
+
+
+# load response variables
+
+### Read data for specific gene expression
+dat1 <- read.csv(file="ENSG115944.csv" )
+
+# STR data for locus of interest
+dat2 <- read.csv(file="ENS115944STRup2.csv",header=FALSE )
+
+varit <- 2:66
+resultsout <- NULL
+# bring response and STR information together.
+for (i in varit) {
+dat3 <- merge(dat1,dat2[,c(1,i)],by.x="Gene",by.y="V1")
+
+
+#We only want the one locus. Drop all other levels from factor variables.
+dat4 <- droplevels(dat3)
+
+#### Want the STR value to numeric not factor
+dat4$STR <- as.numeric(as.character(dat4[,3]))
+dat4$STRquad <- dat4$STR**2
+
+dat5 <- aggregate(dat4[,c("STR","STRquad")],by=list(dat4$Gene,dat4$Response),FUN=sum,na.rm=TRUE)
+
+names(dat5) <- c("Sample","y","STR","STRsqr")
+
+agglm <- lm(y ~ STR,dat=dat5)
+agglmf <- lm(y ~ STR+STRsqr,dat=dat5)
+
+pv <- lmp(agglm)
+pvf <- lmp(agglmf)
+
+
+SSTotal <- var( dat5$y ) * (nrow(dat5)-1)
+    SSE     <- sum( agglm$resid^2 )
+SSreg   <- SSTotal - SSE
+BICreg <- BIC(agglm)
+AICreg <- AIC(agglm)
+
+  SSEf     <- sum( agglmf$resid^2 )
+SSregf   <- SSTotal - SSEf
+BICregf <- BIC(agglmf)
+AICregf <- AIC(agglmf)
+
+cures <- as.data.frame(cbind(as.character(dat2[2,i]),as.numeric(BICreg),as.numeric(BICregf),as.numeric(AICreg),as.numeric(AICregf),as.numeric(SSTotal),as.numeric(pv),as.numeric(SSreg),as.numeric(SSE),as.numeric(pvf),as.numeric(SSregf),as.numeric(SSEf)))
+
+resultsout <- as.data.frame(rbind(resultsout,cures))
+#write.csv(resultsout,file="fullmodel_stats.csv",row.names = FALSE)
+
+}
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

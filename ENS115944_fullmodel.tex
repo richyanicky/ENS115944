@@ -1,0 +1,425 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Nonlinear models in R},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Nonlinear models in R}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{### Load libraies for plots and data analysis}
+\KeywordTok{library}\NormalTok{(tidyr)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(sjPlot)}
+\KeywordTok{library}\NormalTok{(sjmisc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'sjmisc'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:tidyr':
+## 
+##     replace_na
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(sjlabelled)}
+\KeywordTok{library}\NormalTok{(MASS)}
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------------------------------------------------- tidyverse 1.3.0 --
+\end{verbatim}
+
+\begin{verbatim}
+## v tibble  3.0.0     v dplyr   0.8.5
+## v readr   1.3.1     v stringr 1.4.0
+## v purrr   0.3.4     v forcats 0.5.0
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------------------------------------------------ tidyverse_conflicts() --
+## x tibble::add_case()   masks sjmisc::add_case()
+## x forcats::as_factor() masks sjlabelled::as_factor()
+## x dplyr::as_label()    masks sjlabelled::as_label()
+## x dplyr::filter()      masks stats::filter()
+## x purrr::is_empty()    masks sjmisc::is_empty()
+## x dplyr::lag()         masks stats::lag()
+## x sjmisc::replace_na() masks tidyr::replace_na()
+## x dplyr::select()      masks MASS::select()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(caret)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: lattice
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'caret'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     lift
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(leaps)}
+\KeywordTok{library}\NormalTok{(glmnet)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: Matrix
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'Matrix'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:tidyr':
+## 
+##     expand, pack, unpack
+\end{verbatim}
+
+\begin{verbatim}
+## Loaded glmnet 4.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# load response variables}
+
+\CommentTok{### Read data for specific gene expression}
+\NormalTok{dat1 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\DataTypeTok{file=}\StringTok{"ENSG115944.csv"}\NormalTok{ )}
+
+\CommentTok{# STR data for locus of interest}
+\NormalTok{dat2 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\DataTypeTok{file=}\StringTok{"ENS115944STRup2.csv"}\NormalTok{,}\DataTypeTok{header=}\OtherTok{FALSE}\NormalTok{ )}
+
+
+\NormalTok{dat3 <-}\StringTok{ }\KeywordTok{merge}\NormalTok{(dat1,dat2,}\DataTypeTok{by.x=}\StringTok{"Gene"}\NormalTok{,}\DataTypeTok{by.y=}\StringTok{"V1"}\NormalTok{)}
+
+
+\CommentTok{#We only want the one locus. Drop all other levels from factor variables.}
+\NormalTok{dat4 <-}\StringTok{ }\KeywordTok{droplevels}\NormalTok{(dat3)}
+
+
+\NormalTok{varit <-}\StringTok{ }\DecValTok{3}\OperatorTok{:}\DecValTok{67}
+\NormalTok{numcols <-}\StringTok{ }\KeywordTok{ncol}\NormalTok{(dat4)}\OperatorTok{-}\DecValTok{2}
+\NormalTok{resultsout <-}\StringTok{ }\OtherTok{NULL}
+\CommentTok{# bring response and STR information together.}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ varit) \{}
+\CommentTok{#### Want the STR value to numeric not factor}
+\NormalTok{dat4[,i] <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(dat4[,i]))}
+\NormalTok{dat4[,i}\OperatorTok{+}\NormalTok{numcols] <-}\StringTok{ }\NormalTok{dat4[,i]}\OperatorTok{**}\DecValTok{2}
+
+\NormalTok{\}}
+
+
+\NormalTok{dat5 <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(dat4[,}\DecValTok{3}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(dat4)],}\DataTypeTok{by=}\KeywordTok{list}\NormalTok{(dat4}\OperatorTok{$}\NormalTok{Gene,dat4}\OperatorTok{$}\NormalTok{Response),}\DataTypeTok{FUN=}\NormalTok{sum,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+
+\KeywordTok{names}\NormalTok{(dat5)[}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{] <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Gene"}\NormalTok{,}\StringTok{"y"}\NormalTok{)}
+
+\NormalTok{dat6 <-}\StringTok{ }\NormalTok{dat5}
+
+\NormalTok{varit <-}\StringTok{ }\DecValTok{3}\OperatorTok{:}\DecValTok{67}
+\NormalTok{numcols <-}\StringTok{ }\KeywordTok{ncol}\NormalTok{(dat5)}\OperatorTok{-}\DecValTok{2}
+\CommentTok{# bring response and STR information together.}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ varit) \{}
+\CommentTok{#### Want the STR value to numeric not factor}
+\NormalTok{dat6[,i}\OperatorTok{+}\NormalTok{numcols] <-}\StringTok{ }\NormalTok{dat6[,i]}\OperatorTok{*}\NormalTok{dat6[,i}\OperatorTok{+}\DecValTok{65}\NormalTok{]}
+
+\NormalTok{\}}
+
+
+\NormalTok{agglm <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{.,}\DataTypeTok{dat=}\NormalTok{dat5[,}\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(dat5)])}
+
+\NormalTok{agglm2 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{V30}\OperatorTok{+}\NormalTok{V31}\OperatorTok{+}\NormalTok{V47}\OperatorTok{+}\NormalTok{V96}\OperatorTok{+}\NormalTok{V114,}\DataTypeTok{dat=}\NormalTok{dat5[,}\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(dat5)])}
+
+\NormalTok{agglmf <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{V30}\OperatorTok{+}\NormalTok{V31}\OperatorTok{*}\NormalTok{V96}\OperatorTok{+}\NormalTok{V47}\OperatorTok{*}\NormalTok{V114,}\DataTypeTok{dat=}\NormalTok{dat5[,}\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(dat5)])}
+
+
+
+
+
+\NormalTok{SSTotal <-}\StringTok{ }\KeywordTok{var}\NormalTok{( dat5}\OperatorTok{$}\NormalTok{y ) }\OperatorTok{*}\StringTok{ }\NormalTok{(}\KeywordTok{nrow}\NormalTok{(dat5)}\OperatorTok{-}\DecValTok{1}\NormalTok{)}
+\NormalTok{    SSE     <-}\StringTok{ }\KeywordTok{sum}\NormalTok{( agglm2}\OperatorTok{$}\NormalTok{resid}\OperatorTok{^}\DecValTok{2}\NormalTok{ )}
+\NormalTok{SSreg   <-}\StringTok{ }\NormalTok{SSTotal }\OperatorTok{-}\StringTok{ }\NormalTok{SSE}
+\NormalTok{BICreg <-}\StringTok{ }\KeywordTok{BIC}\NormalTok{(agglm2)}
+
+\NormalTok{  SSEf     <-}\StringTok{ }\KeywordTok{sum}\NormalTok{( agglmf}\OperatorTok{$}\NormalTok{resid}\OperatorTok{^}\DecValTok{2}\NormalTok{ )}
+\NormalTok{SSregf   <-}\StringTok{ }\NormalTok{SSTotal }\OperatorTok{-}\StringTok{ }\NormalTok{SSEf}
+\NormalTok{BICregf <-}\StringTok{ }\KeywordTok{BIC}\NormalTok{(agglmf)}
+
+\CommentTok{#resultsout <- rbind(resultsout,cbind(i,BICreg,BICregf,SSTotal,SSreg,SSE,SSregf,SSEf))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{full.model <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{.,}\DataTypeTok{dat=}\NormalTok{dat6[,}\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(dat6)])}
+\CommentTok{# Stepwise regression model}
+\NormalTok{step.model <-}\StringTok{ }\KeywordTok{stepAIC}\NormalTok{(full.model, }\DataTypeTok{direction =} \StringTok{"both"}\NormalTok{, }
+                      \DataTypeTok{trace =} \OtherTok{FALSE}\NormalTok{)}
+
+\KeywordTok{BIC}\NormalTok{(step.model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 382.1433
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{thestep <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{V4 }\OperatorTok{+}\StringTok{ }\NormalTok{V18 }\OperatorTok{+}\StringTok{ }\NormalTok{V20 }\OperatorTok{+}\StringTok{ }\NormalTok{V30 }\OperatorTok{+}\StringTok{ }\NormalTok{V31 }\OperatorTok{+}\StringTok{ }\NormalTok{V38 }\OperatorTok{+}\StringTok{ }\NormalTok{V48 }\OperatorTok{+}\StringTok{ }\NormalTok{V51 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V59 }\OperatorTok{+}\StringTok{ }\NormalTok{V73 }\OperatorTok{+}\StringTok{ }\NormalTok{V83 }\OperatorTok{+}\StringTok{ }\NormalTok{V84 }\OperatorTok{+}\StringTok{ }\NormalTok{V88 }\OperatorTok{+}\StringTok{ }\NormalTok{V95 }\OperatorTok{+}\StringTok{ }\NormalTok{V96 }\OperatorTok{+}\StringTok{ }\NormalTok{V97 }\OperatorTok{+}\StringTok{ }\NormalTok{V101 }\OperatorTok{+}\StringTok{ }\NormalTok{V109 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V117 }\OperatorTok{+}\StringTok{ }\NormalTok{V118 }\OperatorTok{+}\StringTok{ }\NormalTok{V125 }\OperatorTok{+}\StringTok{ }\NormalTok{V135 }\OperatorTok{+}\StringTok{ }\NormalTok{V153 }\OperatorTok{+}\StringTok{ }\NormalTok{V154 }\OperatorTok{+}\StringTok{ }\NormalTok{V159 }\OperatorTok{+}\StringTok{ }\NormalTok{V162 }\OperatorTok{+}\StringTok{ }\NormalTok{V169 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V174 }\OperatorTok{+}\StringTok{ }\NormalTok{V179 }\OperatorTok{+}\StringTok{ }\NormalTok{V190 }\OperatorTok{+}\StringTok{ }\NormalTok{V142, }\DataTypeTok{data =}\NormalTok{ dat6[, }\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(dat6)])}
+
+\KeywordTok{summary}\NormalTok{(thestep)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ V4 + V18 + V20 + V30 + V31 + V38 + V48 + V51 + 
+##     V59 + V73 + V83 + V84 + V88 + V95 + V96 + V97 + V101 + V109 + 
+##     V117 + V118 + V125 + V135 + V153 + V154 + V159 + V162 + V169 + 
+##     V174 + V179 + V190 + V142, data = dat6[, 2:ncol(dat6)])
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.90914 -0.20946 -0.00221  0.22220  1.43389 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  0.378808   0.064004   5.919 1.28e-08 ***
+## V4          -0.525092   0.171874  -3.055 0.002536 ** 
+## V18         -0.128741   0.058972  -2.183 0.030117 *  
+## V20          0.805926   0.248962   3.237 0.001399 ** 
+## V30         -0.108599   0.026758  -4.059 6.92e-05 ***
+## V31         -0.212672   0.117736  -1.806 0.072270 .  
+## V38          0.092832   0.050327   1.845 0.066482 .  
+## V48         -0.201828   0.088610  -2.278 0.023732 *  
+## V51          0.228535   0.155551   1.469 0.143247    
+## V59          0.154097   0.091413   1.686 0.093307 .  
+## V73         -0.205572   0.087537  -2.348 0.019766 *  
+## V83          0.049659   0.020898   2.376 0.018371 *  
+## V84         -0.049348   0.020825  -2.370 0.018692 *  
+## V88          0.177177   0.077951   2.273 0.024023 *  
+## V95          0.032839   0.014321   2.293 0.022817 *  
+## V96          0.009865   0.002503   3.940 0.000110 ***
+## V97          0.164085   0.077348   2.121 0.035039 *  
+## V101         0.092816   0.053853   1.723 0.086243 .  
+## V109        -0.054985   0.020805  -2.643 0.008828 ** 
+## V117         0.281840   0.159830   1.763 0.079265 .  
+## V118        -0.009544   0.006687  -1.427 0.154956    
+## V125         0.093701   0.063997   1.464 0.144621    
+## V135         0.232253   0.089491   2.595 0.010106 *  
+## V153         0.080775   0.031630   2.554 0.011353 *  
+## V154         0.004307   0.002882   1.494 0.136561    
+## V159        -0.015398   0.004269  -3.607 0.000386 ***
+## V162        -0.020138   0.010823  -1.861 0.064162 .  
+## V169        -0.004385   0.002405  -1.823 0.069670 .  
+## V174        -0.012147   0.005975  -2.033 0.043297 *  
+## V179         0.144379   0.041647   3.467 0.000637 ***
+## V190         0.016194   0.010847   1.493 0.136930    
+## V142        -0.014435   0.004176  -3.457 0.000660 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.3899 on 214 degrees of freedom
+## Multiple R-squared:  0.4856, Adjusted R-squared:  0.411 
+## F-statistic: 6.516 on 31 and 214 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  SSEstep     <-}\StringTok{ }\KeywordTok{sum}\NormalTok{( thestep}\OperatorTok{$}\NormalTok{resid}\OperatorTok{^}\DecValTok{2}\NormalTok{ )}
+\NormalTok{SSregstep   <-}\StringTok{ }\NormalTok{SSTotal }\OperatorTok{-}\StringTok{ }\NormalTok{SSEf}
+\NormalTok{BICregstep <-}\StringTok{ }\KeywordTok{BIC}\NormalTok{(thestep)}
+
+\NormalTok{thestep1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{V4 }\OperatorTok{+}\StringTok{ }\NormalTok{V18 }\OperatorTok{+}\StringTok{ }\NormalTok{V20 }\OperatorTok{+}\StringTok{ }\NormalTok{V30 }\OperatorTok{+}\StringTok{ }\NormalTok{V31 }\OperatorTok{+}\StringTok{ }\NormalTok{V38 }\OperatorTok{+}\StringTok{ }\NormalTok{V48 }\OperatorTok{+}\StringTok{ }\NormalTok{V51 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V59 }\OperatorTok{+}\StringTok{ }\NormalTok{V73 }\OperatorTok{+}\StringTok{ }\NormalTok{V83 }\OperatorTok{+}\StringTok{ }\NormalTok{V84 }\OperatorTok{+}\StringTok{ }\NormalTok{V88 }\OperatorTok{+}\StringTok{ }\NormalTok{V95 }\OperatorTok{+}\StringTok{ }\NormalTok{V96 }\OperatorTok{+}\StringTok{ }\NormalTok{V97 }\OperatorTok{+}\StringTok{ }\NormalTok{V101 }\OperatorTok{+}\StringTok{ }\NormalTok{V109 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V117 }\OperatorTok{+}\StringTok{ }\NormalTok{V118 }\OperatorTok{+}\StringTok{ }\NormalTok{V125 }\OperatorTok{+}\StringTok{ }\NormalTok{V135 }\OperatorTok{+}\StringTok{ }\NormalTok{V153 }\OperatorTok{+}\StringTok{ }\NormalTok{V154 }\OperatorTok{+}\StringTok{ }\NormalTok{V159 }\OperatorTok{+}\StringTok{ }\NormalTok{V162 }\OperatorTok{+}\StringTok{ }\NormalTok{V169 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V174 }\OperatorTok{+}\StringTok{ }\NormalTok{V179 }\OperatorTok{+}\StringTok{ }\NormalTok{V142, }\DataTypeTok{data =}\NormalTok{ dat6[, }\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(dat6)])}
+
+\NormalTok{thestep1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{V4 }\OperatorTok{+}\StringTok{ }\NormalTok{V18 }\OperatorTok{+}\StringTok{ }\NormalTok{V20 }\OperatorTok{+}\StringTok{ }\NormalTok{V30 }\OperatorTok{+}\StringTok{ }\NormalTok{V31 }\OperatorTok{+}\StringTok{ }\NormalTok{V38 }\OperatorTok{+}\StringTok{ }\NormalTok{V48 }\OperatorTok{+}\StringTok{ }\NormalTok{V51 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V59 }\OperatorTok{+}\StringTok{ }\NormalTok{V73 }\OperatorTok{+}\StringTok{ }\NormalTok{V83 }\OperatorTok{+}\StringTok{ }\NormalTok{V84 }\OperatorTok{+}\StringTok{ }\NormalTok{V88 }\OperatorTok{+}\StringTok{ }\NormalTok{V95 }\OperatorTok{+}\StringTok{ }\NormalTok{V96 }\OperatorTok{+}\StringTok{ }\NormalTok{V97 }\OperatorTok{+}\StringTok{ }\NormalTok{V101 }\OperatorTok{+}\StringTok{ }\NormalTok{V109 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V117 }\OperatorTok{+}\StringTok{ }\NormalTok{V118 }\OperatorTok{+}\StringTok{ }\NormalTok{V125 }\OperatorTok{+}\StringTok{ }\NormalTok{V135 }\OperatorTok{+}\StringTok{ }\NormalTok{V153 }\OperatorTok{+}\StringTok{ }\NormalTok{V159 }\OperatorTok{+}\StringTok{ }\NormalTok{V162 }\OperatorTok{+}\StringTok{ }\NormalTok{V169 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V174 }\OperatorTok{+}\StringTok{ }\NormalTok{V179 }\OperatorTok{+}\StringTok{ }\NormalTok{V142, }\DataTypeTok{data =}\NormalTok{ dat6[, }\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(dat6)])}
+
+\NormalTok{thestep1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{V4 }\OperatorTok{+}\StringTok{ }\NormalTok{V18 }\OperatorTok{+}\StringTok{ }\NormalTok{V20 }\OperatorTok{+}\StringTok{ }\NormalTok{V30 }\OperatorTok{+}\StringTok{ }\NormalTok{V31 }\OperatorTok{+}\StringTok{ }\NormalTok{V38 }\OperatorTok{+}\StringTok{ }\NormalTok{V48 }\OperatorTok{+}\StringTok{ }\NormalTok{V51 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V59 }\OperatorTok{+}\StringTok{ }\NormalTok{V73 }\OperatorTok{+}\StringTok{ }\NormalTok{V83 }\OperatorTok{+}\StringTok{ }\NormalTok{V84 }\OperatorTok{+}\StringTok{ }\NormalTok{V88 }\OperatorTok{+}\StringTok{ }\NormalTok{V95 }\OperatorTok{+}\StringTok{ }\NormalTok{V96 }\OperatorTok{+}\StringTok{ }\NormalTok{V97 }\OperatorTok{+}\StringTok{ }\NormalTok{V101 }\OperatorTok{+}\StringTok{ }\NormalTok{V109 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V117 }\OperatorTok{+}\StringTok{ }\NormalTok{V118 }\OperatorTok{+}\StringTok{ }\NormalTok{V135 }\OperatorTok{+}\StringTok{ }\NormalTok{V153 }\OperatorTok{+}\StringTok{ }\NormalTok{V159 }\OperatorTok{+}\StringTok{ }\NormalTok{V162 }\OperatorTok{+}\StringTok{ }\NormalTok{V169 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V174 }\OperatorTok{+}\StringTok{ }\NormalTok{V179 }\OperatorTok{+}\StringTok{ }\NormalTok{V142, }\DataTypeTok{data =}\NormalTok{ dat6[, }\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(dat6)])}
+
+\NormalTok{thestep1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{V4 }\OperatorTok{+}\StringTok{ }\NormalTok{V18 }\OperatorTok{+}\StringTok{ }\NormalTok{V20 }\OperatorTok{+}\StringTok{ }\NormalTok{V30 }\OperatorTok{+}\StringTok{ }\NormalTok{V31 }\OperatorTok{+}\StringTok{ }\NormalTok{V38 }\OperatorTok{+}\StringTok{ }\NormalTok{V48 }\OperatorTok{+}\StringTok{ }\NormalTok{V51 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V59 }\OperatorTok{+}\StringTok{ }\NormalTok{V73 }\OperatorTok{+}\StringTok{ }\NormalTok{V83 }\OperatorTok{+}\StringTok{ }\NormalTok{V84 }\OperatorTok{+}\StringTok{ }\NormalTok{V88 }\OperatorTok{+}\StringTok{ }\NormalTok{V95 }\OperatorTok{+}\StringTok{ }\NormalTok{V96 }\OperatorTok{+}\StringTok{ }\NormalTok{V97 }\OperatorTok{+}\StringTok{ }\NormalTok{V101 }\OperatorTok{+}\StringTok{ }\NormalTok{V109 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V117 }\OperatorTok{+}\StringTok{ }\NormalTok{V135 }\OperatorTok{+}\StringTok{ }\NormalTok{V153 }\OperatorTok{+}\StringTok{ }\NormalTok{V159 }\OperatorTok{+}\StringTok{ }\NormalTok{V162 }\OperatorTok{+}\StringTok{ }\NormalTok{V169 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V174 }\OperatorTok{+}\StringTok{ }\NormalTok{V179 }\OperatorTok{+}\StringTok{ }\NormalTok{V142, }\DataTypeTok{data =}\NormalTok{ dat6[, }\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(dat6)])}
+
+\NormalTok{thestep1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{V4 }\OperatorTok{+}\StringTok{ }\NormalTok{V18 }\OperatorTok{+}\StringTok{ }\NormalTok{V20 }\OperatorTok{+}\StringTok{ }\NormalTok{V30 }\OperatorTok{+}\StringTok{ }\NormalTok{V38 }\OperatorTok{+}\StringTok{ }\NormalTok{V48 }\OperatorTok{+}\StringTok{ }\NormalTok{V51 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V59 }\OperatorTok{+}\StringTok{ }\NormalTok{V73 }\OperatorTok{+}\StringTok{ }\NormalTok{V83 }\OperatorTok{+}\StringTok{ }\NormalTok{V84 }\OperatorTok{+}\StringTok{ }\NormalTok{V88 }\OperatorTok{+}\StringTok{ }\NormalTok{V95 }\OperatorTok{+}\StringTok{ }\NormalTok{V96 }\OperatorTok{+}\StringTok{ }\NormalTok{V97 }\OperatorTok{+}\StringTok{ }\NormalTok{V101 }\OperatorTok{+}\StringTok{ }\NormalTok{V109 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V117 }\OperatorTok{+}\StringTok{ }\NormalTok{V118 }\OperatorTok{+}\StringTok{ }\NormalTok{V135 }\OperatorTok{+}\StringTok{ }\NormalTok{V153 }\OperatorTok{+}\StringTok{ }\NormalTok{V159 }\OperatorTok{+}\StringTok{ }\NormalTok{V162 }\OperatorTok{+}\StringTok{ }\NormalTok{V169 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V174 }\OperatorTok{+}\StringTok{ }\NormalTok{V179 }\OperatorTok{+}\StringTok{ }\NormalTok{V142, }\DataTypeTok{data =}\NormalTok{ dat6[, }\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(dat6)])}
+
+\NormalTok{thestep1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{V4 }\OperatorTok{+}\StringTok{ }\NormalTok{V18 }\OperatorTok{+}\StringTok{ }\NormalTok{V20 }\OperatorTok{+}\StringTok{ }\NormalTok{V30 }\OperatorTok{+}\StringTok{ }\NormalTok{V38 }\OperatorTok{+}\StringTok{ }\NormalTok{V48 }\OperatorTok{+}\StringTok{ }\NormalTok{V51 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V59 }\OperatorTok{+}\StringTok{ }\NormalTok{V73 }\OperatorTok{+}\StringTok{ }\NormalTok{V83 }\OperatorTok{+}\StringTok{ }\NormalTok{V84 }\OperatorTok{+}\StringTok{ }\NormalTok{V88 }\OperatorTok{+}\StringTok{ }\NormalTok{V95 }\OperatorTok{+}\StringTok{ }\NormalTok{V96 }\OperatorTok{+}\StringTok{ }\NormalTok{V97 }\OperatorTok{+}\StringTok{ }\NormalTok{V101 }\OperatorTok{+}\StringTok{ }\NormalTok{V109 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V117 }\OperatorTok{+}\StringTok{ }\NormalTok{V118 }\OperatorTok{+}\StringTok{ }\NormalTok{V135 }\OperatorTok{+}\StringTok{ }\NormalTok{V153 }\OperatorTok{+}\StringTok{ }\NormalTok{V159 }\OperatorTok{+}\StringTok{ }\NormalTok{V169 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V174 }\OperatorTok{+}\StringTok{ }\NormalTok{V179 }\OperatorTok{+}\StringTok{ }\NormalTok{V142, }\DataTypeTok{data =}\NormalTok{ dat6[, }\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(dat6)])}
+
+\NormalTok{thestep1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{V4 }\OperatorTok{+}\StringTok{ }\NormalTok{V18 }\OperatorTok{+}\StringTok{ }\NormalTok{V20 }\OperatorTok{+}\StringTok{ }\NormalTok{V30 }\OperatorTok{+}\StringTok{ }\NormalTok{V38 }\OperatorTok{+}\StringTok{ }\NormalTok{V48 }\OperatorTok{+}\StringTok{ }\NormalTok{V51 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V59 }\OperatorTok{+}\StringTok{ }\NormalTok{V73 }\OperatorTok{+}\StringTok{ }\NormalTok{V83 }\OperatorTok{+}\StringTok{ }\NormalTok{V84 }\OperatorTok{+}\StringTok{ }\NormalTok{V88 }\OperatorTok{+}\StringTok{ }\NormalTok{V95 }\OperatorTok{+}\StringTok{ }\NormalTok{V96 }\OperatorTok{+}\StringTok{ }\NormalTok{V101 }\OperatorTok{+}\StringTok{ }\NormalTok{V109 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V117 }\OperatorTok{+}\StringTok{ }\NormalTok{V118 }\OperatorTok{+}\StringTok{ }\NormalTok{V135 }\OperatorTok{+}\StringTok{ }\NormalTok{V153 }\OperatorTok{+}\StringTok{ }\NormalTok{V159 }\OperatorTok{+}\StringTok{ }\NormalTok{V169 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V174 }\OperatorTok{+}\StringTok{ }\NormalTok{V179 }\OperatorTok{+}\StringTok{ }\NormalTok{V142, }\DataTypeTok{data =}\NormalTok{ dat6[, }\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(dat6)])}
+
+\NormalTok{thestep1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{V4 }\OperatorTok{+}\StringTok{ }\NormalTok{V18 }\OperatorTok{+}\StringTok{ }\NormalTok{V20 }\OperatorTok{+}\StringTok{ }\NormalTok{V30 }\OperatorTok{+}\StringTok{ }\NormalTok{V38 }\OperatorTok{+}\StringTok{ }\NormalTok{V48 }\OperatorTok{+}\StringTok{  }
+\StringTok{    }\NormalTok{V59 }\OperatorTok{+}\StringTok{ }\NormalTok{V73 }\OperatorTok{+}\StringTok{ }\NormalTok{V83 }\OperatorTok{+}\StringTok{ }\NormalTok{V84 }\OperatorTok{+}\StringTok{ }\NormalTok{V88 }\OperatorTok{+}\StringTok{ }\NormalTok{V95 }\OperatorTok{+}\StringTok{ }\NormalTok{V96 }\OperatorTok{+}\StringTok{ }\NormalTok{V101 }\OperatorTok{+}\StringTok{ }\NormalTok{V109 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V117 }\OperatorTok{+}\StringTok{ }\NormalTok{V118 }\OperatorTok{+}\StringTok{ }\NormalTok{V135 }\OperatorTok{+}\StringTok{ }\NormalTok{V153 }\OperatorTok{+}\StringTok{ }\NormalTok{V159 }\OperatorTok{+}\StringTok{ }\NormalTok{V169 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V174 }\OperatorTok{+}\StringTok{ }\NormalTok{V179 }\OperatorTok{+}\StringTok{ }\NormalTok{V142, }\DataTypeTok{data =}\NormalTok{ dat6[, }\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(dat6)])}
+
+\NormalTok{thestep1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{V4 }\OperatorTok{+}\StringTok{ }\NormalTok{V18 }\OperatorTok{+}\StringTok{ }\NormalTok{V20 }\OperatorTok{+}\StringTok{ }\NormalTok{V30 }\OperatorTok{+}\StringTok{ }\NormalTok{V38 }\OperatorTok{+}\StringTok{ }\NormalTok{V48 }\OperatorTok{+}\StringTok{  }
+\StringTok{    }\NormalTok{V59 }\OperatorTok{+}\StringTok{ }\NormalTok{V73 }\OperatorTok{+}\StringTok{ }\NormalTok{V83 }\OperatorTok{+}\StringTok{ }\NormalTok{V84 }\OperatorTok{+}\StringTok{ }\NormalTok{V88 }\OperatorTok{+}\StringTok{ }\NormalTok{V95 }\OperatorTok{+}\StringTok{ }\NormalTok{V96 }\OperatorTok{+}\StringTok{ }\NormalTok{V101 }\OperatorTok{+}\StringTok{ }\NormalTok{V109 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V117 }\OperatorTok{+}\StringTok{ }\NormalTok{V135 }\OperatorTok{+}\StringTok{ }\NormalTok{V153 }\OperatorTok{+}\StringTok{ }\NormalTok{V159 }\OperatorTok{+}\StringTok{ }\NormalTok{V169 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{V174 }\OperatorTok{+}\StringTok{ }\NormalTok{V179 }\OperatorTok{+}\StringTok{ }\NormalTok{V142, }\DataTypeTok{data =}\NormalTok{ dat6[, }\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(dat6)])}
+
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{predict}\NormalTok{(thestep1),dat6[,}\StringTok{"y"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{ENS115944_fullmodel_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+Add a new chunk by clicking the \emph{Insert Chunk} button on the
+toolbar or by pressing \emph{Ctrl+Alt+I}.
+
+When you save the notebook, an HTML file containing the code and output
+will be saved alongside it (click the \emph{Preview} button or press
+\emph{Ctrl+Shift+K} to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the
+editor. Consequently, unlike \emph{Knit}, \emph{Preview} does not run
+any R code chunks. Instead, the output of the chunk when it was last run
+in the editor is displayed.
+
+\end{document}

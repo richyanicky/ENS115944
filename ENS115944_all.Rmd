@@ -9,6 +9,7 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 
 ```{r}
 library(tidyr)
+library(ggplot2)
 dat1 <- read.csv(file="ENSG115944.csv" )
 
 dat2locs <- read.csv(file="ENS115944STRup2.csv",header=FALSE )
@@ -25,13 +26,17 @@ dat4 <- droplevels(dat3)
 ### V42 is the start postion we want. start = 42625365
 dat4$STR <- dat4[,3]
 dat4$STRquad <- dat4$STR**2
+#dat4$STRcross <- dat4$STR*dat4$STRquad
 #seplm <- lm(dat4$Response ~ dat4$STR + dat4$STRquad)
 #summary(seplm)
 #summary(lm(dat4$Response ~ dat4$STR))
 
 dat5 <- aggregate(dat4[,c("STR","STRquad")],by=list(dat4$Gene,dat4$Response),FUN=sum,na.rm=TRUE)
 
-agglm <- lm(dat5$Group.2~ dat5$STR+dat5$STRquad)
+agglm <- lm(dat5$Group.2~ dat5$STR+dat5$STRquad+dat5$STR*dat5$STRquad)
+
+#agglm <- lm(dat5$Group.2~ dat5$STR+dat5$STRquad+dat5$STRcross)
+#agglm <- lm(dat5$Group.2~ dat5$STR+dat5$STRcross)
 
 
 agglmlin <- lm(dat5$Group.2~ dat5$STR)

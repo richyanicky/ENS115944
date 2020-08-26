@@ -1,0 +1,830 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Nonlinear models in R},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Nonlinear models in R}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{### Load libraies for plots and data analysis}
+\KeywordTok{library}\NormalTok{(tidyr)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(sjPlot)}
+\KeywordTok{library}\NormalTok{(sjmisc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Learn more about sjmisc with 'browseVignettes("sjmisc")'.
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'sjmisc'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:tidyr':
+## 
+##     replace_na
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(sjlabelled)}
+
+\CommentTok{# load response variables}
+
+\CommentTok{### Read data for specific gene expression}
+\NormalTok{dat1 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\DataTypeTok{file=}\StringTok{"ENSG115944.csv"}\NormalTok{ )}
+\KeywordTok{head}\NormalTok{(dat1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         Gene    Response
+## 1 GTEX-111CU  0.39017555
+## 2 GTEX-111FC  0.03120579
+## 3 GTEX-111VG  0.19041977
+## 4 GTEX-111YS -0.43028956
+## 5 GTEX-1122O -0.38954960
+## 6 GTEX-1128S -0.61189468
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# STR data for locus of interest}
+\NormalTok{dat2 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\DataTypeTok{file=}\StringTok{"ENS115944STRup2.csv"}\NormalTok{,}\DataTypeTok{header=}\OtherTok{FALSE}\NormalTok{ )}
+\NormalTok{dat2[}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{,}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          V1       V2       V3       V4       V5
+## 1  ï»¿chrom     chr2     chr2     chr2     chr2
+## 2     start 42561331 42561688 42562461 42571991
+## 3 GTEX-PLZ4        0        0     <NA>        0
+## 4 GTEX-PLZ4        0        0     <NA>       -1
+## 5 GTEX-NFK9        0        0        1     <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# bring response and STR information together.}
+\NormalTok{dat3 <-}\StringTok{ }\KeywordTok{merge}\NormalTok{(dat1,dat2[,}\KeywordTok{c}\NormalTok{(}\StringTok{"V1"}\NormalTok{,}\StringTok{"V41"}\NormalTok{)],}\DataTypeTok{by.x=}\StringTok{"Gene"}\NormalTok{,}\DataTypeTok{by.y=}\StringTok{"V1"}\NormalTok{)}
+\NormalTok{dat3[}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         Gene   Response  V41
+## 1 GTEX-111CU 0.39017555    0
+## 2 GTEX-111CU 0.39017555   -1
+## 3 GTEX-111FC 0.03120579    0
+## 4 GTEX-111FC 0.03120579    0
+## 5 GTEX-111VG 0.19041977 <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#We only want the one locus. Drop all other levels from factor variables.}
+\NormalTok{dat4 <-}\StringTok{ }\KeywordTok{droplevels}\NormalTok{(dat3)}
+
+\CommentTok{### Copy the data for detailed analsis requiring madifcations}
+\NormalTok{dat3temp <-}\StringTok{ }\NormalTok{dat3}
+\NormalTok{dat3temp}\OperatorTok{$}\NormalTok{STR <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(dat3temp}\OperatorTok{$}\NormalTok{V41))}
+
+\NormalTok{dat3temp[}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\KeywordTok{nrow}\NormalTok{(dat3temp),}\DecValTok{2}\NormalTok{),}\StringTok{"side"}\NormalTok{] <-}\StringTok{ "L"}
+\NormalTok{dat3temp[}\KeywordTok{seq}\NormalTok{(}\DecValTok{2}\NormalTok{,}\KeywordTok{nrow}\NormalTok{(dat3temp),}\DecValTok{2}\NormalTok{),}\StringTok{"side"}\NormalTok{] <-}\StringTok{ "R"}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{In the next section we will have the following analysis}
+
+The STR(s) are on two independent chanels. To utilize the values to
+determine significant effects the chanels need to be combined. The
+following need to be demntrated:
+
+\begin{itemize}
+\tightlist
+\item
+  The chanel has no effect (i.e.~left or right), this shows the values
+  are assigned at random.
+\item
+  The value of the STR should be equal and opposite across the chanel,
+  the values -4 and 4 cancel for example
+\item
+  The STR and STR\^{}2 are significant along with the interaction of STR
+  and STR\^{}2
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## Model to determine if there is any significance by side , there should be none.}
+\NormalTok{sidelm <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(Response}\OperatorTok{~}\NormalTok{side,}\DataTypeTok{data=}\NormalTok{dat3temp)}
+\KeywordTok{summary}\NormalTok{(sidelm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Response ~ side, data = dat3temp)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.44161 -0.35593  0.00199  0.33249  1.49277 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  9.411e-03  3.239e-02   0.291    0.772
+## sideR       -1.201e-16  4.581e-02   0.000    1.000
+## 
+## Residual standard error: 0.5081 on 490 degrees of freedom
+## Multiple R-squared:  2.447e-32,  Adjusted R-squared:  -0.002041 
+## F-statistic: 1.199e-29 on 1 and 490 DF,  p-value: 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## Model to determine if there is any significance by STR by itself , there should be none.}
+\NormalTok{STRlm <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(Response}\OperatorTok{~}\NormalTok{STR,}\DataTypeTok{data=}\NormalTok{dat3temp)}
+\KeywordTok{summary}\NormalTok{(STRlm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Response ~ STR, data = dat3temp)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.31549 -0.36865 -0.00349  0.31245  1.50817 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)
+## (Intercept) -0.005988   0.027982  -0.214    0.831
+## STR         -0.052220   0.092421  -0.565    0.572
+## 
+## Residual standard error: 0.5244 on 358 degrees of freedom
+##   (132 observations deleted due to missingness)
+## Multiple R-squared:  0.0008909,  Adjusted R-squared:  -0.0019 
+## F-statistic: 0.3192 on 1 and 358 DF,  p-value: 0.5724
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## Model to determine if there is any significance by STR by itself , there should be none.}
+\NormalTok{STRsidelm <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(Response}\OperatorTok{~}\NormalTok{STR}\OperatorTok{+}\NormalTok{side,}\DataTypeTok{data=}\NormalTok{dat3temp)}
+\KeywordTok{summary}\NormalTok{(STRsidelm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Response ~ STR + side, data = dat3temp)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.31564 -0.36872 -0.00349  0.31237  1.50831 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)
+## (Intercept) -0.0058430  0.0393585  -0.148    0.882
+## STR         -0.0522241  0.0925548  -0.564    0.573
+## sideR       -0.0002901  0.0553588  -0.005    0.996
+## 
+## Residual standard error: 0.5252 on 357 degrees of freedom
+##   (132 observations deleted due to missingness)
+## Multiple R-squared:  0.000891,   Adjusted R-squared:  -0.004706 
+## F-statistic: 0.1592 on 2 and 357 DF,  p-value: 0.8529
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tab_model}\NormalTok{(sidelm,STRlm,STRsidelm)}
+\end{Highlighting}
+\end{Shaded}
+
+~
+
+Response
+
+Response
+
+Response
+
+Predictors
+
+Estimates
+
+CI
+
+p
+
+Estimates
+
+CI
+
+p
+
+Estimates
+
+CI
+
+p
+
+(Intercept)
+
+0.01
+
+-0.05~--~0.07
+
+0.772
+
+-0.01
+
+-0.06~--~0.05
+
+0.831
+
+-0.01
+
+-0.08~--~0.07
+
+0.882
+
+side {[}R{]}
+
+-0.00
+
+-0.09~--~0.09
+
+1.000
+
+-0.00
+
+-0.11~--~0.11
+
+0.996
+
+STR
+
+-0.05
+
+-0.23~--~0.13
+
+0.572
+
+-0.05
+
+-0.23~--~0.13
+
+0.573
+
+Observations
+
+492
+
+360
+
+360
+
+R2 / R2 adjusted
+
+0.000 / -0.002
+
+0.001 / -0.002
+
+0.001 / -0.005
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#p1 <- ggplot(dat3temp, aes(as.factor(STR),Response)) + facet_grid(~side) + geom_boxplot()}
+
+
+\CommentTok{#p1}
+\end{Highlighting}
+\end{Shaded}
+
+The STR(s) chanels are combined ``summed'' across.
+
+\begin{itemize}
+\tightlist
+\item
+  The chanel has no effect (i.e.~left or right), this shows the values
+  are assigned at random.
+\item
+  The value of the STR should be equal and opposite across the chanel,
+  the values -4 and 4 cancel for example
+\item
+  The STR and STR\^{}2 are significant along with the interaction of STR
+  and STR\^{}2
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{### V42 is the start postion we want. start = 42625365}
+
+\CommentTok{#### Want the STR value to numeric not factor}
+\NormalTok{dat4}\OperatorTok{$}\NormalTok{STR <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(dat4}\OperatorTok{$}\NormalTok{V41))}
+\NormalTok{dat4}\OperatorTok{$}\NormalTok{STRquad <-}\StringTok{ }\NormalTok{dat4}\OperatorTok{$}\NormalTok{STR}\OperatorTok{**}\DecValTok{2}
+
+\CommentTok{### Add L/R side can be aribtrary becuase of the model steps above.}
+\CommentTok{### i.e no signifcance when choosing side or STR just need to constent}
+\NormalTok{dat4[}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\KeywordTok{nrow}\NormalTok{(dat4),}\DecValTok{2}\NormalTok{),}\StringTok{"side"}\NormalTok{] <-}\StringTok{ "L"}
+\NormalTok{dat4[}\KeywordTok{seq}\NormalTok{(}\DecValTok{2}\NormalTok{,}\KeywordTok{nrow}\NormalTok{(dat4),}\DecValTok{2}\NormalTok{),}\StringTok{"side"}\NormalTok{] <-}\StringTok{ "R"}
+
+\NormalTok{dat4[}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\KeywordTok{nrow}\NormalTok{(dat4),}\DecValTok{2}\NormalTok{),}\StringTok{"opside"}\NormalTok{] <-}\StringTok{ "R"}
+\NormalTok{dat4[}\KeywordTok{seq}\NormalTok{(}\DecValTok{2}\NormalTok{,}\KeywordTok{nrow}\NormalTok{(dat4),}\DecValTok{2}\NormalTok{),}\StringTok{"opside"}\NormalTok{] <-}\StringTok{ "L"}
+
+\CommentTok{### Model with sqaured term.}
+\NormalTok{seplm4a <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(dat4}\OperatorTok{$}\NormalTok{Response }\OperatorTok{~}\StringTok{ }\NormalTok{dat4}\OperatorTok{$}\NormalTok{STR }\OperatorTok{+}\StringTok{ }\NormalTok{dat4}\OperatorTok{$}\NormalTok{STRquad }\OperatorTok{+}\StringTok{ }\NormalTok{dat4}\OperatorTok{$}\NormalTok{side )}
+
+\CommentTok{## STR matter and the squre matters , side L/R does not.}
+\KeywordTok{summary}\NormalTok{(seplm4a)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = dat4$Response ~ dat4$STR + dat4$STRquad + dat4$side)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.31408 -0.36942 -0.00256  0.30034  1.50989 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  -0.0074022  0.0397053  -0.186    0.852
+## dat4$STR     -0.0261717  0.1231022  -0.213    0.832
+## dat4$STRquad  0.0305676  0.0950760   0.322    0.748
+## dat4$sideR   -0.0003152  0.0554285  -0.006    0.995
+## 
+## Residual standard error: 0.5258 on 356 degrees of freedom
+##   (132 observations deleted due to missingness)
+## Multiple R-squared:  0.001181,   Adjusted R-squared:  -0.007236 
+## F-statistic: 0.1403 on 3 and 356 DF,  p-value: 0.9358
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{BIC}\NormalTok{(seplm4a)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 584.2278
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{seplm4b <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(dat4}\OperatorTok{$}\NormalTok{Response }\OperatorTok{~}\StringTok{ }\NormalTok{dat4}\OperatorTok{$}\NormalTok{STR)}
+\KeywordTok{summary}\NormalTok{(seplm4b)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = dat4$Response ~ dat4$STR)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.31549 -0.36865 -0.00349  0.31245  1.50817 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)
+## (Intercept) -0.005988   0.027982  -0.214    0.831
+## dat4$STR    -0.052220   0.092421  -0.565    0.572
+## 
+## Residual standard error: 0.5244 on 358 degrees of freedom
+##   (132 observations deleted due to missingness)
+## Multiple R-squared:  0.0008909,  Adjusted R-squared:  -0.0019 
+## F-statistic: 0.3192 on 1 and 358 DF,  p-value: 0.5724
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{BIC}\NormalTok{(seplm4b)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 572.5602
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(}\KeywordTok{lm}\NormalTok{(dat4}\OperatorTok{$}\NormalTok{Response }\OperatorTok{~}\StringTok{ }\NormalTok{dat4}\OperatorTok{$}\NormalTok{STR }\OperatorTok{+}\StringTok{ }\KeywordTok{abs}\NormalTok{(dat4}\OperatorTok{$}\NormalTok{STR)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = dat4$Response ~ dat4$STR + abs(dat4$STR))
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.31145 -0.36677 -0.00073  0.30273  1.51221 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)
+## (Intercept)   -0.01003    0.02870  -0.349    0.727
+## dat4$STR      -0.00463    0.11846  -0.039    0.969
+## abs(dat4$STR)  0.07805    0.12139   0.643    0.521
+## 
+## Residual standard error: 0.5249 on 357 degrees of freedom
+##   (132 observations deleted due to missingness)
+## Multiple R-squared:  0.002047,   Adjusted R-squared:  -0.003544 
+## F-statistic: 0.3661 on 2 and 357 DF,  p-value: 0.6937
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#dat4$V42 <- factor(dat4$V42,levels(dat4$V42)[order(abs(dat4$STR))])}
+\NormalTok{p2a <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(dat4, }\KeywordTok{aes}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\KeywordTok{as.factor}\NormalTok{(STR),side),Response)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_grid}\NormalTok{(}\OperatorTok{~}\NormalTok{opside,}\DataTypeTok{scales=}\StringTok{"free_x"}\NormalTok{)}
+
+\NormalTok{p2a}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{ENS115944_42625365around_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(}\KeywordTok{lm}\NormalTok{(Response}\OperatorTok{~}\KeywordTok{paste0}\NormalTok{(}\KeywordTok{as.factor}\NormalTok{(STRquad),side),}\DataTypeTok{data =}\NormalTok{ dat4))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Response ~ paste0(as.factor(STRquad), side), data = dat4)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.47688 -0.34633  0.00333  0.30480  1.51562 
+## 
+## Coefficients:
+##                                      Estimate Std. Error t value Pr(>|t|)
+## (Intercept)                         -0.008881   0.039469  -0.225    0.822
+## paste0(as.factor(STRquad), side)0R  -0.004566   0.055902  -0.082    0.935
+## paste0(as.factor(STRquad), side)1L   0.096508   0.152438   0.633    0.527
+## paste0(as.factor(STRquad), side)1R   0.121282   0.146866   0.826    0.409
+## paste0(as.factor(STRquad), side)4L  -0.193415   0.511579  -0.378    0.706
+## paste0(as.factor(STRquad), side)4R   0.145922   0.511579   0.285    0.776
+## paste0(as.factor(STRquad), side)NAL  0.053564   0.074159   0.722    0.470
+## paste0(as.factor(STRquad), side)NAR  0.053564   0.074159   0.722    0.470
+## 
+## Residual standard error: 0.5101 on 484 degrees of freedom
+## Multiple R-squared:  0.004579,   Adjusted R-squared:  -0.009817 
+## F-statistic: 0.3181 on 7 and 484 DF,  p-value: 0.9458
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p2 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(dat4, }\KeywordTok{aes}\NormalTok{(}\KeywordTok{as.factor}\NormalTok{(STRquad),Response)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_boxplot}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_grid}\NormalTok{(}\OperatorTok{~}\NormalTok{STR}\OperatorTok{+}\NormalTok{side,}\DataTypeTok{scales=}\StringTok{"free_x"}\NormalTok{)}
+
+\NormalTok{p2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{ENS115944_42625365around_files/figure-latex/unnamed-chunk-3-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat5 <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(dat4[,}\KeywordTok{c}\NormalTok{(}\StringTok{"STR"}\NormalTok{,}\StringTok{"STRquad"}\NormalTok{)],}\DataTypeTok{by=}\KeywordTok{list}\NormalTok{(dat4}\OperatorTok{$}\NormalTok{Gene,dat4}\OperatorTok{$}\NormalTok{Response),}\DataTypeTok{FUN=}\NormalTok{sum,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+
+\KeywordTok{names}\NormalTok{(dat5) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Gene"}\NormalTok{,}\StringTok{"y"}\NormalTok{,}\StringTok{"STR"}\NormalTok{,}\StringTok{"STRsqr"}\NormalTok{)}
+
+
+
+\NormalTok{agglm <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{STR}\OperatorTok{+}\NormalTok{STR}\OperatorTok{*}\NormalTok{STRsqr,}\DataTypeTok{dat=}\NormalTok{dat5)}
+\KeywordTok{summary}\NormalTok{(agglm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ STR + STR * STRsqr, data = dat5)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.43160 -0.34418  0.00865  0.30644  1.50278 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)
+## (Intercept) -0.0006042  0.0344788  -0.018    0.986
+## STR         -0.0968366  0.1497885  -0.646    0.519
+## STRsqr       0.0884170  0.1243464   0.711    0.478
+## STR:STRsqr   0.0724206  0.0924336   0.783    0.434
+## 
+## Residual standard error: 0.5102 on 242 degrees of freedom
+## Multiple R-squared:  0.003855,   Adjusted R-squared:  -0.008493 
+## F-statistic: 0.3122 on 3 and 242 DF,  p-value: 0.8166
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{BIC}\NormalTok{(agglm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 390.5568
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mf <-}\StringTok{ }\KeywordTok{model.frame}\NormalTok{(agglm)}
+\KeywordTok{plot}\NormalTok{(mf[,}\StringTok{"y"}\NormalTok{],}\KeywordTok{predict}\NormalTok{(agglm))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{ENS115944_42625365around_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{xvals <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\OperatorTok{-}\DecValTok{24}\NormalTok{,}\DecValTok{14}\NormalTok{,}\DataTypeTok{length.out=}\DecValTok{246}\NormalTok{)}
+\NormalTok{fitvals <-}\StringTok{ }\FloatTok{0.1458} \FloatTok{-0.02701}\OperatorTok{*}\NormalTok{xvals }\OperatorTok{-}\StringTok{ }\FloatTok{0.001724}\OperatorTok{*}\NormalTok{xvals}\OperatorTok{**}\DecValTok{2} \OperatorTok{+}\StringTok{ }\FloatTok{0.00008863}\OperatorTok{*}\NormalTok{(xvals}\OperatorTok{*}\NormalTok{xvals}\OperatorTok{**}\DecValTok{2}\NormalTok{)}
+
+
+\KeywordTok{plot}\NormalTok{(mf[,}\StringTok{"y"}\NormalTok{],}\KeywordTok{predict}\NormalTok{(agglm),}\DataTypeTok{col=}\KeywordTok{as.factor}\NormalTok{(mf[,}\StringTok{"STR"}\NormalTok{]),}\DataTypeTok{main=}\StringTok{"Actual v predicted with model fit estimate"}\NormalTok{)}
+\KeywordTok{lines}\NormalTok{(mf[,}\StringTok{"y"}\NormalTok{],fitvals)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{ENS115944_42625365around_files/figure-latex/unnamed-chunk-4-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(mf[,}\StringTok{"y"}\NormalTok{],fitvals,}\DataTypeTok{main=}\StringTok{"Actual v model fit estimate"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{ENS115944_42625365around_files/figure-latex/unnamed-chunk-4-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Coefficients:}
+\CommentTok{#              Estimate Std. Error t value Pr(>|t|)    }
+\CommentTok{#(Intercept)  1.458e-01  4.533e-02   3.216 0.001475 ** }
+\CommentTok{#STR         -2.701e-02  7.974e-03  -3.387 0.000826 ***}
+\CommentTok{#STRsqr      -1.724e-03  5.999e-04  -2.874 0.004416 ** }
+\CommentTok{#STR:STRsqr   8.863e-05  4.182e-05   2.119 0.035090 * }
+
+
+\NormalTok{p3 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(dat5, }\KeywordTok{aes}\NormalTok{(}\KeywordTok{as.factor}\NormalTok{(STRsqr),y)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_boxplot}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_grid}\NormalTok{(}\OperatorTok{~}\NormalTok{STR,}\DataTypeTok{scales=}\StringTok{"free_x"}\NormalTok{)}
+
+\NormalTok{p3}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{ENS115944_42625365around_files/figure-latex/unnamed-chunk-4-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#agglmcat <- lm(dat5$Group.2~ as.factor(dat5$STR)+as.factor(dat5$STRquad))}
+\CommentTok{#summary(agglmcat)}
+
+\KeywordTok{summary}\NormalTok{(}\KeywordTok{lm}\NormalTok{(dat5}\OperatorTok{$}\NormalTok{y }\OperatorTok{~}\StringTok{ }\NormalTok{dat5}\OperatorTok{$}\NormalTok{STR))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = dat5$y ~ dat5$STR)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.43844 -0.35102  0.00357  0.33016  1.49594 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  0.006238   0.033037   0.189    0.850
+## dat5$STR    -0.045922   0.090201  -0.509    0.611
+## 
+## Residual standard error: 0.5089 on 244 degrees of freedom
+## Multiple R-squared:  0.001061,   Adjusted R-squared:  -0.003033 
+## F-statistic: 0.2592 on 1 and 244 DF,  p-value: 0.6111
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat5}\OperatorTok{$}\NormalTok{linsum <-}\StringTok{ }\NormalTok{dat5}\OperatorTok{$}\NormalTok{STR }\OperatorTok{+}\StringTok{ }\NormalTok{dat5}\OperatorTok{$}\NormalTok{STRsqr}
+\NormalTok{dat5}\OperatorTok{$}\NormalTok{linsumint <-}\StringTok{ }\NormalTok{dat5}\OperatorTok{$}\NormalTok{STR }\OperatorTok{+}\StringTok{ }\NormalTok{dat5}\OperatorTok{$}\NormalTok{STRsqr }\OperatorTok{+}\StringTok{ }\NormalTok{(dat5}\OperatorTok{$}\NormalTok{STR}\OperatorTok{*}\NormalTok{dat5}\OperatorTok{$}\NormalTok{STRsqr)}
+
+\NormalTok{linmodsqr <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(dat5}\OperatorTok{$}\NormalTok{y }\OperatorTok{~}\StringTok{ }\NormalTok{dat5}\OperatorTok{$}\NormalTok{linsum)}
+
+\KeywordTok{BIC}\NormalTok{(linmodsqr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 380.4675
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#(Intercept)  0.1240251  0.0434871   2.852 0.004717 ** }
+\CommentTok{#dat5$linsum -0.0014102  0.0003685  -3.827 0.000165 ***}
+
+\NormalTok{xvals <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{300}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+
+\KeywordTok{plot}\NormalTok{(dat5}\OperatorTok{$}\NormalTok{linsum,dat5}\OperatorTok{$}\NormalTok{y)}
+\KeywordTok{lines}\NormalTok{(xvals,}\FloatTok{0.124-0.00141}\OperatorTok{*}\NormalTok{xvals)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{ENS115944_42625365around_files/figure-latex/unnamed-chunk-4-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{linmodsqrint <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(dat5}\OperatorTok{$}\NormalTok{y }\OperatorTok{~}\StringTok{ }\NormalTok{dat5}\OperatorTok{$}\NormalTok{linsumint)}
+
+\KeywordTok{BIC}\NormalTok{(linmodsqrint)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 380.4902
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(linmodsqrint)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = dat5$y ~ dat5$linsumint)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.44144 -0.35402  0.00217  0.32380  1.49294 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(>|t|)
+## (Intercept)     0.009236   0.032537   0.284    0.777
+## dat5$linsumint -0.003308   0.042381  -0.078    0.938
+## 
+## Residual standard error: 0.5091 on 244 degrees of freedom
+## Multiple R-squared:  2.496e-05,  Adjusted R-squared:  -0.004073 
+## F-statistic: 0.006091 on 1 and 244 DF,  p-value: 0.9379
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{xvals <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\OperatorTok{-}\DecValTok{6650}\NormalTok{,}\DecValTok{1600}\NormalTok{,}\DecValTok{5}\NormalTok{)}
+
+\KeywordTok{plot}\NormalTok{(dat5}\OperatorTok{$}\NormalTok{linsumint,dat5}\OperatorTok{$}\NormalTok{y)}
+\KeywordTok{lines}\NormalTok{(}\DataTypeTok{x=}\FloatTok{0.0000427}\OperatorTok{*}\NormalTok{xvals)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{ENS115944_42625365around_files/figure-latex/unnamed-chunk-4-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mf <-}\StringTok{ }\KeywordTok{model.frame}\NormalTok{(agglm)}
+\KeywordTok{plot}\NormalTok{(mf[,}\StringTok{"y"}\NormalTok{],}\KeywordTok{predict}\NormalTok{(agglm))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{ENS115944_42625365around_files/figure-latex/unnamed-chunk-4-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{xvals <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\OperatorTok{-}\DecValTok{24}\NormalTok{,}\DecValTok{14}\NormalTok{,}\DataTypeTok{length.out=}\DecValTok{246}\NormalTok{)}
+\NormalTok{fitvals <-}\StringTok{ }\FloatTok{0.158} \FloatTok{-0.0144}\OperatorTok{*}\NormalTok{xvals }\OperatorTok{-}\StringTok{ }\FloatTok{0.00234}\OperatorTok{*}\NormalTok{xvals}\OperatorTok{**}\DecValTok{2}
+\KeywordTok{plot}\NormalTok{(xvals,}\KeywordTok{predict}\NormalTok{(agglm),}\DataTypeTok{col=}\KeywordTok{as.factor}\NormalTok{(mf[,}\StringTok{"STR"}\NormalTok{]))}
+\KeywordTok{lines}\NormalTok{(xvals,fitvals)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{ENS115944_42625365around_files/figure-latex/unnamed-chunk-4-8.pdf}
+
+Add a new chunk by clicking the \emph{Insert Chunk} button on the
+toolbar or by pressing \emph{Ctrl+Alt+I}.
+
+When you save the notebook, an HTML file containing the code and output
+will be saved alongside it (click the \emph{Preview} button or press
+\emph{Ctrl+Shift+K} to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the
+editor. Consequently, unlike \emph{Knit}, \emph{Preview} does not run
+any R code chunks. Instead, the output of the chunk when it was last run
+in the editor is displayed.
+
+\end{document}

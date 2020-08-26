@@ -1,0 +1,211 @@
+---
+title: "Nonlinear models in R"
+output:
+  word_document:
+    toc: yes
+  html_notebook: default
+  pdf_document: default
+  html_document:
+    fig_caption: yes
+    toc: yes
+---
+
+
+```{r}
+### Load libraies for plots and data analysis
+library(tidyr)
+library(ggplot2)
+library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
+library(MASS)
+library(tidyverse)
+library(caret)
+library(leaps)
+library(glmnet)
+# load response variables
+
+### Read data for specific gene expression
+dat1 <- read.csv(file="ENSG115944.csv" )
+
+# STR data for locus of interest
+dat2 <- read.csv(file="ENS115944STRup2.csv",header=FALSE )
+
+
+dat3 <- merge(dat1,dat2,by.x="Gene",by.y="V1")
+
+
+#We only want the one locus. Drop all other levels from factor variables.
+dat4 <- droplevels(dat3)
+
+
+varit <- 3:67
+numcols <- ncol(dat4)-2
+resultsout <- NULL
+# bring response and STR information together.
+for (i in varit) {
+#### Want the STR value to numeric not factor
+dat4[,i] <- as.numeric(as.character(dat4[,i]))
+dat4[,i+numcols] <- dat4[,i]**2
+
+}
+
+
+dat5 <- aggregate(dat4[,3:ncol(dat4)],by=list(dat4$Gene,dat4$Response),FUN=sum,na.rm=TRUE)
+
+names(dat5)[1:2] <- c("Gene","y")
+
+dat6 <- dat5
+
+varit <- 3:67
+numcols <- ncol(dat5)-2
+# bring response and STR information together.
+for (i in varit) {
+#### Want the STR value to numeric not factor
+dat6[,i+numcols] <- dat6[,i]*dat6[,i+65]
+
+}
+
+
+agglm <- lm(y ~ .,dat=dat5[,2:ncol(dat5)])
+
+agglm2 <- lm(y ~ V30+V31+V47+V96+V114,dat=dat5[,2:ncol(dat5)])
+
+agglmf <- lm(y ~ V30+V31*V96+V47*V114,dat=dat5[,2:ncol(dat5)])
+
+
+
+
+
+SSTotal <- var( dat5$y ) * (nrow(dat5)-1)
+    SSE     <- sum( agglm2$resid^2 )
+SSreg   <- SSTotal - SSE
+BICreg <- BIC(agglm2)
+
+  SSEf     <- sum( agglmf$resid^2 )
+SSregf   <- SSTotal - SSEf
+BICregf <- BIC(agglmf)
+
+#resultsout <- rbind(resultsout,cbind(i,BICreg,BICregf,SSTotal,SSreg,SSE,SSregf,SSEf))
+
+```
+
+```{r}
+
+full.model <- lm(y ~ .,dat=dat6[,2:ncol(dat6)])
+# Stepwise regression model
+step.model <- stepAIC(full.model, direction = "both", 
+                      trace = FALSE)
+
+BIC(step.model)
+
+thestep <- lm(formula = y ~ V4 + V18 + V20 + V30 + V31 + V38 + V48 + V51 + 
+    V59 + V73 + V83 + V84 + V88 + V95 + V96 + V97 + V101 + V109 + 
+    V117 + V118 + V125 + V135 + V153 + V154 + V159 + V162 + V169 + 
+    V174 + V179 + V190 + V142, data = dat6[, 2:ncol(dat6)])
+
+summary(thestep)
+
+  SSEstep     <- sum( thestep$resid^2 )
+SSregstep   <- SSTotal - SSEf
+BICregstep <- BIC(thestep)
+
+thestep1 <- lm(formula = y ~ V4 + V18 + V20 + V30 + V31 + V38 + V48 + V51 + 
+    V59 + V73 + V83 + V84 + V88 + V95 + V96 + V97 + V101 + V109 + 
+    V117 + V118 + V125 + V135 + V153 + V154 + V159 + V162 + V169 + 
+    V174 + V179 + V142, data = dat6[, 2:ncol(dat6)])
+
+thestep1 <- lm(formula = y ~ V4 + V18 + V20 + V30 + V31 + V38 + V48 + V51 + 
+    V59 + V73 + V83 + V84 + V88 + V95 + V96 + V97 + V101 + V109 + 
+    V117 + V118 + V125 + V135 + V153 + V159 + V162 + V169 + 
+    V174 + V179 + V142, data = dat6[, 2:ncol(dat6)])
+
+thestep1 <- lm(formula = y ~ V4 + V18 + V20 + V30 + V31 + V38 + V48 + V51 + 
+    V59 + V73 + V83 + V84 + V88 + V95 + V96 + V97 + V101 + V109 + 
+    V117 + V118 + V135 + V153 + V159 + V162 + V169 + 
+    V174 + V179 + V142, data = dat6[, 2:ncol(dat6)])
+
+thestep1 <- lm(formula = y ~ V4 + V18 + V20 + V30 + V31 + V38 + V48 + V51 + 
+    V59 + V73 + V83 + V84 + V88 + V95 + V96 + V97 + V101 + V109 + 
+    V117 + V135 + V153 + V159 + V162 + V169 + 
+    V174 + V179 + V142, data = dat6[, 2:ncol(dat6)])
+
+thestep1 <- lm(formula = y ~ V4 + V18 + V20 + V30 + V38 + V48 + V51 + 
+    V59 + V73 + V83 + V84 + V88 + V95 + V96 + V97 + V101 + V109 + 
+    V117 + V118 + V135 + V153 + V159 + V162 + V169 + 
+    V174 + V179 + V142, data = dat6[, 2:ncol(dat6)])
+
+thestep1 <- lm(formula = y ~ V4 + V18 + V20 + V30 + V38 + V48 + V51 + 
+    V59 + V73 + V83 + V84 + V88 + V95 + V96 + V97 + V101 + V109 + 
+    V117 + V118 + V135 + V153 + V159 + V169 + 
+    V174 + V179 + V142, data = dat6[, 2:ncol(dat6)])
+
+thestep1 <- lm(formula = y ~ V4 + V18 + V20 + V30 + V38 + V48 + V51 + 
+    V59 + V73 + V83 + V84 + V88 + V95 + V96 + V101 + V109 + 
+    V117 + V118 + V135 + V153 + V159 + V169 + 
+    V174 + V179 + V142, data = dat6[, 2:ncol(dat6)])
+
+thestep1 <- lm(formula = y ~ V4 + V18 + V20 + V30 + V38 + V48 +  
+    V59 + V73 + V83 + V84 + V88 + V95 + V96 + V101 + V109 + 
+    V117 + V118 + V135 + V153 + V159 + V169 + 
+    V174 + V179 + V142, data = dat6[, 2:ncol(dat6)])
+
+thestep1 <- lm(formula = y ~ V4 + V18 + V20 + V30 + V38 + V48 +  
+    V59 + V73 + V83 + V84 + V88 + V95 + V96 + V101 + V109 + 
+    V117 + V135 + V153 + V159 + V169 + 
+    V174 + V179 + V142, data = dat6[, 2:ncol(dat6)])
+
+plot(predict(thestep1),dat6[,"y"])
+```
+
+```{r eval=FALSE, echo=FALSE}
+
+dat7 <- dat5
+
+varit <- 3:67
+numcols <- ncol(dat5)-2
+# bring response and STR information together.
+for (i in varit) {
+
+#### Want the STR value to numeric not factor
+dat7[,numcols:(numcols+(66-i))] <- dat5[,i]*dat5[,(i+1):67]
+numcols <- ncol(dat7)
+}
+
+
+training.samples <- dat7$y %>% 
+  createDataPartition(p = 0.8, list = FALSE)
+train.data  <- dat7[training.samples, ]
+test.data <- dat7[-training.samples, ]
+
+
+cv.lasso <- cv.glmnet(as.matrix(train.data[,3:ncol(train.data)]), train.data$y, alpha = 1, family = "gaussian")
+
+lasso1<-glmnet(x=as.matrix(train.data[,3:ncol(train.data)]),train.data$y,family="gaussian",alpha=1,lambda = cv.lasso$lamdba.1se)
+
+
+x.test <- model.matrix(y ~., test.data)[,-1]
+
+probabilities <- lasso1 %>% predict(newx = x.test)
+
+
+observed.classes <- test.data$y
+
+
+lasso1 %>% predict(test.data, type = "response")
+
+
+full.model2 <- lm(y ~ .,dat=dat7[,2:ncol(dat7)])
+# Stepwise regression model
+step.model2 <- stepAIC(full.model2, direction = "both", 
+                      trace = FALSE)
+
+BIC(step.model2)
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
